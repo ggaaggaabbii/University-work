@@ -1,0 +1,2 @@
+-change the showing function so that they can be tested
+-refactor the data validation module
