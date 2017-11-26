@@ -1,0 +1,96 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf              ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import printf msvcrt.dll
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13                                      ; ...
+    14 00000000 78563412CDAB561244-         sir dd 12345678h, 1256ABCDh, 12AB4344h, 31246752h
+    14 00000009 43AB1252672431     
+    15                                      len equ ($ - sir) / 4
+    16 00000010 00000000                    contor dd 0
+    17 00000014 25780A0D00                  format db "%x", 10, 13, 0
+    18 00000019 04000000                    patru dd 4
+    19 0000001D 00000000                    aux dd 0
+    20                                      
+    21                                  ; our code starts here
+    22                                  segment code use32 class=code
+    23                                      start:
+    24 00000000 B903000000                      mov ecx, len - 1;initializam numarul de iteratii din primul for
+    25                                          ; ...
+    26                                          for1:
+    27                                  
+    28 00000005 BE[00000000]                        mov esi, sir
+    29 0000000A A1[10000000]                        mov eax, [contor]
+    30 0000000F F725[19000000]                      mul dword [patru]
+    31 00000015 01C6                                add esi, eax;calculam pozitia relativa al lui v[i]
+    32                                              
+    33 00000017 89F7                                mov edi, esi
+    34                                              
+    35 00000019 A1[10000000]                        mov eax, [contor]
+    36 0000001E A3[1D000000]                        mov [aux], eax
+    37 00000023 FF05[1D000000]                      inc dword [aux];initializam inceputul celui de al doilea for
+    38                                              
+    39                                              for2:
+    40 00000029 83C704                                  add edi, 4;incrementam pentru a avea corect v[j]
+    41                                                  
+    42 0000002C 66A7                                    cmpsw;comparam cele 2 elemente
+    43                                                  
+    44 0000002E 726D                                    jb swap
+    45                                                  
+    46 00000030 83EF02                                  sub edi, 2
+    47 00000033 83EE02                                  sub esi, 2
+    48                                                  
+    49                                                  endfor2:
+    50 00000036 FF05[1D000000]                              inc dword [aux]
+    51 0000003C 833D[1D000000]04                            cmp dword [aux], len
+    52 00000043 7402                                        je endfor1
+    53 00000045 75E2                                        jne for2
+    54                                                      
+    55                                              endfor1:
+    56 00000047 FF05[10000000]                          inc dword [contor]
+    57                                              
+    58 0000004D E2B6                                    loop for1
+    59                                          
+    60 0000004F B900000000                      mov ecx, 0
+    61 00000054 890D[10000000]                  mov [contor], ecx
+    62 0000005A B904000000                      mov ecx, len;initializam forul pentru afisare
+    63                                      
+    64                                          show:
+    65 0000005F 890D[1D000000]                      mov [aux], ecx
+    66                                                 
+    67 00000065 BE[00000000]                        mov esi, sir
+    68 0000006A A1[10000000]                        mov eax, [contor]
+    69 0000006F F725[19000000]                      mul dword [patru]
+    70 00000075 01C6                                add esi, eax;calculam pozitia relativa a elementului care trebuie afisat
+    71                                              
+    72 00000077 FF36                                push dword [esi]
+    73 00000079 68[14000000]                        push dword format
+    74 0000007E FF15[00000000]                      call [printf]
+    75 00000084 83C408                              add esp, 4 * 2;afisam elementul
+    76                                              
+    77 00000087 FF05[10000000]                      inc dword [contor]
+    78                                              
+    79 0000008D 8B0D[1D000000]                      mov ecx, [aux]
+    80 00000093 E2CA                            loop show
+    81                                              
+    82 00000095 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    83 00000097 FF15[00000000]                  call    [exit]       ; call exit to terminate the program
+    84                                              
+    85                                          swap:
+    86 0000009D 83EF02                              sub edi, 2
+    87 000000A0 83EE02                              sub esi, 2
+    88 000000A3 668B1F                              mov bx, [edi]
+    89 000000A6 66A5                                movsw
+    90 000000A8 83EF02                              sub edi, 2 
+    91 000000AB 83EE02                              sub esi, 2
+    92 000000AE 66891E                              mov [esi], bx
+    93                                              
+    94 000000B1 EB83                                jmp endfor2;facem swap intre v[i] si v[j]
+    95                                          

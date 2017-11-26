@@ -1,0 +1,151 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, printf, scanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import printf msvcrt.dll
+    11                                  import scanf msvcrt.dll
+    12                                  ; our data is declared here (the variables needed by our program)
+    13                                  segment data use32 class=data
+    14                                      ; ...
+    15 00000000 120003000F00FF00            a dw 12h, 3h, 0fh, 0ffh
+    16 00000008 880A12                      d db 88h, 0ah, 12h
+    17 0000000B 080005000300FCFFF8-         b dw 8, 5, 3, -4, -8
+    17 00000014 FF                 
+    18 00000015 FEA84305                    c dd 543a8feh
+    19                                      len equ ($ - a)
+    20 00000019 00                          n db 0
+    21 0000001A 00                          m db 0
+    22 0000001B 00000000                    aux dd 0
+    23 0000001F 25640A0D00                  format db "%d", 10, 13, 0
+    24 00000024 25780A0D00                  format1 db "%x", 10, 13, 0
+    25 00000029 6F63746574756C2064-         mesaj db "octetul din memorie de pe pozitia %d este: %x", 10, 13, 0
+    25 00000032 696E206D656D6F7269-
+    25 0000003B 652064652070652070-
+    25 00000044 6F7A69746961202564-
+    25 0000004D 20657374653A202578-
+    25 00000056 0A0D00             
+    26 00000059 44410A0D00                  mesajpar db "DA", 10, 13, 0
+    27 0000005E 4E550A0D00                  mesajimpar db "NU", 10, 13, 0
+    28 00000063 00<rept>                    sir times 30 db 0 
+    29 00000081 FF                          min1 db -1
+    30 00000082 00                          contor db 0
+    31                                      
+    32                                      
+    33                                  ; our code starts here
+    34                                  segment code use32 class=code
+    35                                      start:
+    36                                          ; ...
+    37 00000000 A1[15000000]                    mov eax, [c]
+    38 00000005 0805[19000000]                  or [n], al
+    39 0000000B 8025[19000000]F0                and byte [n], 11110000b
+    40 00000012 C1E01C                          shl eax, 28
+    41 00000015 240F                            and al, 00001111b
+    42 00000017 340F                            xor al, 00001111b
+    43 00000019 0805[19000000]                  or [n], al
+    44                                          
+    45 0000001F A0[19000000]                    mov al, [n]
+    46 00000024 6698                            cbw
+    47 00000026 98                              cwde
+    48                                          
+    49 00000027 50                              push dword eax
+    50 00000028 68[1F000000]                    push dword format
+    51 0000002D FF15[00000000]                  call [printf]
+    52 00000033 83C408                          add esp, 4 * 2
+    53                                          
+    54                                          
+    55 00000036 A0[19000000]                    mov al, [n]
+    56 0000003B 8A1D[81000000]                  mov bl, [min1]
+    57 00000041 F6EB                            imul bl
+    58                                  
+    59 00000043 98                              cwde
+    60 00000044 83C001                          add eax, 1
+    61 00000047 A2[19000000]                    mov [n], al
+    62                                          
+    63                                          
+    64 0000004C 50                              push dword eax
+    65 0000004D 68[1F000000]                    push dword format
+    66 00000052 FF15[00000000]                  call [printf]
+    67 00000058 83C408                          add esp, 4 * 2
+    68                                          
+    69                                          
+    70 0000005B B800000000                      mov eax, 0
+    71 00000060 A0[19000000]                    mov al, [n]
+    72 00000065 89C6                            mov esi, eax
+    73                                          
+    74 00000067 B800000000                      mov eax, 0
+    75 0000006C 8A86[00000000]                  mov al, [a + esi]
+    76                                          
+    77 00000072 B800000000                      mov eax, 0
+    78 00000077 8A86[00000000]                  mov al, [a + esi]
+    79                                          
+    80 0000007D 50                              push dword eax
+    81                                          
+    82 0000007E B800000000                      mov eax, 0
+    83 00000083 A0[19000000]                    mov al, [n]
+    84                                          
+    85 00000088 50                              push dword eax
+    86 00000089 68[29000000]                    push dword mesaj
+    87 0000008E FF15[00000000]                  call [printf]
+    88 00000094 83C40C                          add esp, 4 * 3
+    89                                          
+    90 00000097 B919000000                      mov ecx, len
+    91                                          
+    92 0000009C BE00000000                      mov esi, 0
+    93                                          
+    94                                          repeta:
+    95 000000A1 890D[1B000000]                      mov [aux], ecx
+    96 000000A7 BB19000000                          mov ebx, len
+    97 000000AC 29CB                                sub ebx, ecx
+    98                                              
+    99 000000AE 53                                  push ebx
+   100 000000AF 6658                                pop ax
+   101 000000B1 665A                                pop dx
+   102 000000B3 66F735[19000000]                    div word [n]
+   103 000000BA 6683FA00                            cmp dx, 0
+   104 000000BE 7546                                jne skip
+   105                                              
+   106 000000C0 89D8                                mov eax, ebx
+   107                                               
+   108 000000C2 89DE                                mov esi, ebx
+   109 000000C4 8A86[00000000]                      mov al, [a + esi]
+   110                                              
+   111                                              
+   112                                              
+   113 000000CA 88C2                                mov dl, al
+   114                                              
+   115 000000CC D0E8                                shr al, 1
+   116 000000CE D0E0                                shl al, 1
+   117                                              
+   118 000000D0 38D0                                cmp al, dl
+   119 000000D2 7412                                je par
+   120 000000D4 7520                                jne impar
+   121                                              
+   122                                              endloop:
+   123 000000D6 8B0D[1B000000]                      mov ecx, [aux]
+   124 000000DC E2C3                                loop repeta
+   125                                              
+   126                                          
+   127                                          ; exit(0)
+   128 000000DE 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   129 000000E0 FF15[00000000]                  call    [exit]       ; call exit to terminate the program
+   130                                      
+   131                                      par:
+   132 000000E6 68[59000000]                    push dword mesajpar
+   133 000000EB FF15[00000000]                  call [printf]
+   134 000000F1 83C404                          add esp, 4 * 1
+   135 000000F4 EBE0                            jmp endloop
+   136                                          
+   137                                      impar:
+   138 000000F6 68[5E000000]                    push dword mesajimpar
+   139 000000FB FF15[00000000]                  call [printf]
+   140 00000101 83C404                          add esp, 4 * 1
+   141 00000104 EBD0                            jmp endloop
+   142                                          
+   143                                      skip:
+   144 00000106 EBCE                            jmp endloop
+   145                                          
