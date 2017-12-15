@@ -43,20 +43,18 @@ double gaussDeterminant(double **M, int n){
 			}
 		}
 	}
-	return determinant;
+	return int(determinant);
 }
 
 void printResult(double **M, int n){
-	++numberOfBases;
-	if (n >= 5)
-		return;
-	g << "basis number: " << numberOfBases << '\n' << "<";
+
+g << "basis number: " << ++numberOfBases << '\n' << "<";
 	for (int i = 1; i <= n; ++i){
 		g << "(";
 		for (int j = 1; j < n; ++j){
-			g << M[j][i] << ", ";
+			g << M[i][j] << ", ";
 		}
-		g << M[n][i];
+		g << M[i][n];
 		g << ") ";
 	}
 	g << ">\n";
@@ -73,14 +71,17 @@ void makeCopy(double **Result, double **M, int n){
 void computeSpace(int step, int finalStep, double **M){
 	if (step == finalStep + 1){
 		makeCopy(Result, M, finalStep);
-		if (gaussDeterminant(M, finalStep) != 0)
+		if (int (gaussDeterminant(M, finalStep)) % 2 != 0){
 			printResult(Result, finalStep);
+		}
+		makeCopy(M, Result, finalStep);
 		return;
 	}
-	for (int i = 0; i <= MAXVAL; ++i){
-		int aux = i;
+	int aux;
+	for (int i = 1; i <= MAXVAL; ++i){
+		aux = i;
 		for (int j = 1; j <= finalStep; ++j){
-			M[j][step] = aux % 2;
+			M[step][j] = aux % 2;
 			aux /= 2;
 		}
 	computeSpace(step + 1, finalStep, M);
@@ -133,7 +134,7 @@ int main(){
 	basisCounter(n);
 	g << '\n';
 
-	if (n < 5)
+	if (n <= 5)
 		computeSpace(1, n, M);
 	
 	return 0;
