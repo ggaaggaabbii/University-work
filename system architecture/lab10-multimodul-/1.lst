@@ -1,0 +1,108 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  %include "expresie.asm"
+     1                              <1> %ifndef _EXPRESIE_ASM_
+     2                              <1> %define _EXPRESIE_ASM_
+     3                              <1> ; our code starts here
+     4                              <1>     expresie:
+     5                              <1>     ;calcculeaza (2*a-b)*10-c
+     6 00000000 B800000000          <1>         mov eax, 0
+     7 00000005 8B5C2404            <1>         mov ebx, [esp + 4]
+     8 00000009 88D8                <1>         mov al, bl
+     9 0000000B B102                <1>         mov cl, 2
+    10 0000000D F6E1                <1>         mul cl
+    11                              <1>         
+    12 0000000F 8B5C2408            <1>         mov ebx, [esp+8]
+    13 00000013 6689D9              <1>         mov cx, bx
+    14 00000016 6629C8              <1>         sub ax, cx
+    15 00000019 66B90A00            <1>         mov cx, 10
+    16 0000001D 66F7E1              <1>         mul cx
+    17                              <1>         
+    18 00000020 8B5C240C            <1>         mov ebx, [esp + 12]
+    19 00000024 29D8                <1>         sub eax, ebx
+    20                              <1>         
+    21 00000026 50                  <1>         push eax
+    22 00000027 6658                <1>         pop ax
+    23 00000029 665A                <1>         pop dx
+    24 0000002B C3                  <1>         ret
+    25                              <1> %endif
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, printf, fopen, fprintf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import fopen msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  
+    14                                      ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    15                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    16                                  
+    17                                  ; our data is declared here (the variables needed by our program)
+    18                                  segment data use32 public class=data
+    19                                      ; ...
+    20 0000002C 00000000                    a db 0, 0, 0, 0
+    21 00000030 00000000                    b dw 0, 0
+    22 00000034 00000000                    c dd 0
+    23 00000038 256400                      formatCitire db "%d", 0
+    24 0000003B 6F75747075742E7478-         numeFisier db "output.txt", 0
+    24 00000044 7400               
+    25 00000046 7700                        moddeschidere db "w", 0
+    26 00000048 25640A0D00                  formatafisare db "%d", 10, 13, 0
+    27 0000004D 00000000                    descriptordisier dd 0
+    28                                  ; our code starts here
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ; ...
+    32 00000000 68[2C000000]                    push dword a
+    33 00000005 68[38000000]                    push dword formatCitire
+    34 0000000A FF15[00000000]                  call [scanf]
+    35 00000010 83C408                          add esp, 4 * 2
+    36                                          
+    37 00000013 68[30000000]                    push dword b
+    38 00000018 68[38000000]                    push dword formatCitire
+    39 0000001D FF15[00000000]                  call [scanf]
+    40 00000023 83C408                          add esp, 4 * 2
+    41                                          
+    42 00000026 68[34000000]                    push dword c
+    43 0000002B 68[38000000]                    push dword formatCitire
+    44 00000030 FF15[00000000]                  call [scanf]
+    45 00000036 83C408                          add esp, 4 * 2
+    46                                                  
+    47 00000039 FF35[34000000]                  push dword [c]
+    48 0000003F FF35[30000000]                  push dword [b]
+    49 00000045 FF35[2C000000]                  push dword [a]
+    50 0000004B E8(00000000)                    call expresie
+    51 00000050 83C40C                          add esp, 4 * 3
+    52                                          
+    53                                          
+    54 00000053 50                              push dword eax
+    55 00000054 68[38000000]                    push dword formatCitire
+    56 00000059 FF15[00000000]                  call [printf]
+    57 0000005F 83C408                          add esp, 4 * 2
+    58                                  
+    59 00000062 66BB0A00                        mov bx, 10
+    60 00000066 BA00000000                      mov edx, 0
+    61                                          
+    62 0000006B 68[3B000000]                    push numeFisier
+    63 00000070 68[46000000]                    push moddeschidere
+    64 00000075 FF15[00000000]                  call [fopen]
+    65 0000007B 83C408                          add esp, 4 * 2
+    66                                          
+    67 0000007E A3[4D000000]                    mov [descriptordisier], eax
+    68                                          
+    69                                          show:
+    70 00000083 66F7F3                              div bx
+    71 00000086 60                                  pushad
+    72 00000087 52                                  push edx
+    73 00000088 68[48000000]                        push dword formatafisare
+    74 0000008D FF35[4D000000]                      push dword [descriptordisier]
+    75 00000093 FF15[00000000]                      call [fprintf]
+    76 00000099 6683F800                            cmp ax, 0
+    77 0000009D 75E4                                jne show
+    78                                              
+    79                                          
+    80                                          ; exit(0)
+    81 0000009F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    82 000000A1 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

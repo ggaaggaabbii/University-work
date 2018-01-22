@@ -1,0 +1,155 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, fprintf, fopen, fscanf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import fopen msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  import fscanf msvcrt.dll
+    13                                      ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    14                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18                                      ; ...
+    19 00000000 <res 0000003C>              sir resd 15
+    20 0000003C <res 0000003C>              dp resd 15
+    21 00000078 256400                      format_citire db "%d", 0
+    22 0000007B 25642000                    format_scriere db "%d ", 0
+    23 0000007F 257300                      format_citire_nume db "%s", 0
+    24 00000082 7200                        mod_citire db "r", 0
+    25 00000084 7700                        mod_scriere db "w", 0
+    26 00000086 00000000                    descriptor_citire dd 0
+    27 0000008A 00000000                    descriptor_scriere dd 0
+    28 0000008E <res 00000028>              nume_input resb 40
+    29 000000B6 <res 00000028>              nume_output resb 40
+    30 000000DE 00000000                    len_sir dd 0
+    31 000000E2 04000000                    patru dd 4
+    32 000000E6 FFFFFFFF                    minus1 dd -1
+    33 000000EA 00000000                    aux dd 0
+    34 000000EE 00000000                    maxim dd 0
+    35                                      
+    36                                  
+    37                                  ; our code starts here
+    38                                  segment code use32 class=code
+    39                                      start:
+    40                                          ; ...
+    41                                          
+    42 00000000 68[8E000000]                    push nume_input
+    43 00000005 68[7F000000]                    push format_citire_nume
+    44 0000000A FF15[00000000]                  call [scanf]
+    45 00000010 83C408                          add esp, 4 * 2
+    46                                          
+    47 00000013 68[B6000000]                    push nume_output
+    48 00000018 68[7F000000]                    push format_citire_nume
+    49 0000001D FF15[00000000]                  call [scanf]
+    50 00000023 83C408                          add esp, 4 * 2
+    51                                          
+    52 00000026 68[82000000]                    push mod_citire
+    53 0000002B 68[8E000000]                    push nume_input
+    54 00000030 FF15[00000000]                  call [fopen]
+    55 00000036 A3[86000000]                    mov [descriptor_citire], eax
+    56 0000003B 83C408                          add esp, 4 * 2
+    57                                          
+    58 0000003E 68[84000000]                    push mod_scriere
+    59 00000043 68[B6000000]                    push nume_output
+    60 00000048 FF15[00000000]                  call [fopen]
+    61 0000004E A3[8A000000]                    mov [descriptor_scriere], eax
+    62 00000053 83C408                          add esp, 4 * 2
+    63                                          
+    64                                          citire:
+    65 00000056 83F8FF                              cmp eax, -1
+    66 00000059 7430                                je next
+    67 0000005B BB[00000000]                        mov ebx, sir
+    68 00000060 A1[DE000000]                        mov eax, [len_sir]
+    69 00000065 66F725[E2000000]                    mul word [patru]
+    70 0000006C 01D8                                add eax, ebx
+    71                                              
+    72 0000006E 50                                  push eax
+    73 0000006F 68[78000000]                        push format_citire
+    74 00000074 FF35[86000000]                      push dword [descriptor_citire]
+    75 0000007A FF15[00000000]                      call [fscanf]
+    76 00000080 83C40C                              add esp, 4 * 3
+    77 00000083 FF05[DE000000]                      inc dword [len_sir]
+    78 00000089 EBCB                                jmp citire
+    79                                             
+    80                                              
+    81                                          next:
+    82 0000008B FF0D[DE000000]                      dec dword [len_sir]
+    83 00000091 8B0D[DE000000]                      mov ecx, [len_sir]
+    84                                              dinamica:
+    85 00000097 BB[3C000000]                            mov ebx, dp
+    86 0000009C A1[DE000000]                            mov eax, [len_sir]
+    87 000000A1 29C8                                    sub eax, ecx
+    88 000000A3 66F725[E2000000]                        mul word [patru]
+    89                                                  
+    90 000000AA 01C3                                    add ebx, eax
+    91                                                  
+    92                                                  loopback:
+    93 000000AC B8[3C000000]                                mov eax, dp
+    94 000000B1 39C3                                        cmp ebx, eax
+    95 000000B3 720A                                        jb nextstep
+    96                                                      
+    97 000000B5 E809000000                                  call updatedinamica
+    98 000000BA 83EB04                                      sub ebx, 4
+    99                                                      
+   100 000000BD EBED                                        jmp loopback
+   101                                                      
+   102                                                      
+   103                                                  nextstep:
+   104 000000BF E2D6                                        loop dinamica
+   105 000000C1 EB25                            jmp final
+   106                                              
+   107                                          updatedinamica:
+   108                                              
+   109 000000C3 A1[DE000000]                        mov eax, [len_sir]
+   110 000000C8 29C8                                sub eax, ecx
+   111 000000CA 66F725[E2000000]                    mul word [patru]
+   112 000000D1 05[3C000000]                        add eax, dp
+   113 000000D6 8B53C4                              mov edx, [ebx - 60]
+   114                                              
+   115 000000D9 3B50C4                              cmp edx, [eax - 60]
+   116 000000DC 7609                                jbe finish
+   117                                              
+   118 000000DE 8B13                                mov edx, [ebx]
+   119 000000E0 42                                  inc edx
+   120 000000E1 3B10                                cmp edx, [eax]
+   121 000000E3 7602                                jbe finish
+   122                                              ;mov edx, [dp + eax - ecx * 4]
+   123 000000E5 8910                                mov [eax], edx
+   124                                              
+   125                                              finish:
+   126 000000E7 C3                                  ret
+   127                                              
+   128                                          ; exit(0)
+   129                                          final:
+   130 000000E8 8B0D[DE000000]                  mov ecx, [len_sir]
+   131                                              afis:
+   132 000000EE BB[3C000000]                            mov ebx, dp
+   133 000000F3 A1[DE000000]                            mov eax, [len_sir]
+   134 000000F8 29C8                                    sub eax, ecx
+   135 000000FA F725[E2000000]                          mul dword [patru]
+   136                                                  
+   137 00000100 01C3                                    add ebx, eax
+   138                                              
+   139 00000102 8B03                                    mov eax, [ebx]
+   140                                              
+   141 00000104 3B05[EE000000]                          cmp eax, [maxim]
+   142 0000010A 7E05                                    jle finalloop
+   143 0000010C A3[EE000000]                            mov [maxim], eax
+   144                                              
+   145                                                  finalloop:
+   146 00000111 E2DB                                        loop afis
+   147                                              
+   148 00000113 FF35[EE000000]                  push dword [maxim]
+   149 00000119 68[7B000000]                    push format_scriere
+   150 0000011E FF35[8A000000]                  push dword [descriptor_scriere]
+   151 00000124 FF15[00000000]                  call [fprintf]
+   152 0000012A 83C40C                          add esp, 4 * 3
+   153                                          
+   154 0000012D 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   155 0000012F FF15[00000000]                  call    [exit]       ; call exit to terminate the program

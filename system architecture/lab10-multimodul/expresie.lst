@@ -1,0 +1,31 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  
+     7                                  ; our code starts here
+     8                                  segment code use32 public class=code
+     9                                      expresie:
+    10                                      ;calcculeaza (2*a-b)*10-c
+    11 00000000 8B5C2404                        mov ebx, [esp + 4]
+    12 00000004 8A03                            mov al, [ebx]
+    13 00000006 02                              doi db 2
+    14 00000007 F625[06000000]                  mul byte [doi]
+    15                                          
+    16 0000000D 6698                            cbw
+    17                                          
+    18 0000000F 8B5C2408                        mov ebx, [esp + 8]
+    19 00000013 668B0B                          mov cx, [ebx]
+    20 00000016 6629C8                          sub ax, cx
+    21                                          
+    22 00000019 0A                              zece db 10
+    23 0000001A 66F725[19000000]                mul word [zece]
+    24                                          
+    25 00000021 98                              cwde
+    26                                          
+    27 00000022 8B5C240C                        mov ebx, [esp + 12]
+    28 00000026 8B0B                            mov ecx, [ebx]
+    29 00000028 29C8                            sub eax, ecx
+    30 0000002A C3                              ret
+    31                                          

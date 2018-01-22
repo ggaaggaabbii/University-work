@@ -1,0 +1,129 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, fopen, fscanf, printf               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import fscanf msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  import fopen msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    13                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    14                                  
+    15                                  ; our data is declared here (the variables needed by our program)
+    16                                  segment data use32 class=data
+    17                                      ; ...
+    18 00000000 00000000                    contor dd 0
+    19 00000004 00000000                    numar dd 0
+    20 00000008 256400                      integer db "%d", 0
+    21 0000000B 257300                      format db "%s", 0
+    22 0000000E <res 0000001E>              numefisier resb 30
+    23 0000002C 7200                        modd db "r", 0
+    24 0000002E 00000000                    descriptor dd 0
+    25 00000032 <res 0000001E>              cuv resb 30
+    26 00000050 25732000                    format2 db "%s ",0
+    27                                      
+    28                                      
+    29 00000054 6165696F754145494F-         vocale db "aeiouAEIOU", 0
+    29 0000005D 5500               
+    30                                      
+    31                                      
+    32                                  
+    33                                  ; our code starts here
+    34                                  segment code use32 class=code
+    35                                      start:
+    36                                          ; ...
+    37 00000000 68[0E000000]                    push numefisier
+    38 00000005 68[0B000000]                    push format
+    39 0000000A FF15[00000000]                  call [scanf]
+    40 00000010 83C408                          add esp, 4 * 2
+    41                                          
+    42 00000013 68[04000000]                    push numar
+    43 00000018 68[08000000]                    push integer
+    44 0000001D FF15[00000000]                  call [scanf]
+    45 00000023 83C408                          add esp, 4 * 2
+    46                                          
+    47 00000026 68[2C000000]                    push modd
+    48 0000002B 68[0E000000]                    push numefisier
+    49 00000030 FF15[00000000]                  call [fopen]
+    50 00000036 A3[2E000000]                    mov [descriptor], eax
+    51 0000003B 83C408                          add esp, 4 * 2
+    52                                          
+    53                                          citire:
+    54 0000003E 83F8FF                              cmp eax, -1
+    55 00000041 0F848E000000                        je final
+    56                                              
+    57 00000047 68[32000000]                        push cuv
+    58 0000004C 68[0B000000]                        push format
+    59 00000051 FF35[2E000000]                      push dword [descriptor]
+    60 00000057 FF15[00000000]                      call [fscanf]
+    61                                              
+    62 0000005D 50                                  push eax
+    63 0000005E E803000000                          call check
+    64 00000063 58                                  pop eax
+    65                                              
+    66 00000064 EBD8                                jmp citire
+    67                                            
+    68                                          
+    69                                          ; exit(0)
+    70                                          check:
+    71 00000066 83F8FF                              cmp eax, -1
+    72 00000069 7443                                je fin
+    73                                              
+    74                                              
+    75 0000006B B900000000                          mov ecx, 0
+    76 00000070 C705[00000000]0000-                 mov dword [contor], 0
+    76 00000078 0000               
+    77                                              
+    78                                              repet:
+    79 0000007A 80B9[32000000]00                        cmp byte [ecx + cuv], 0
+    80 00000081 742B                                    je fin
+    81                                                  
+    82 00000083 BB00000000                              mov ebx, 0
+    83                                                  repet2:
+    84 00000088 80BB[54000000]00                            cmp byte [ebx + vocale], 0
+    85 0000008F 741A                                        je next
+    86                                                      
+    87 00000091 8A81[32000000]                              mov al, [ecx + cuv]
+    88 00000097 3A83[54000000]                              cmp al, [ebx + vocale]
+    89 0000009D 7403                                        je increment
+    90                                                      
+    91 0000009F 43                                          inc ebx
+    92 000000A0 EBE6                                        jmp repet2
+    93                                                      
+    94                                                  increment:
+    95 000000A2 FF05[00000000]                              inc dword [contor]
+    96 000000A8 43                                          inc ebx
+    97 000000A9 EBDD                                        jmp repet2
+    98                                                      
+    99                                                  next:
+   100 000000AB 41                                          inc ecx
+   101 000000AC EBCC                                        jmp repet
+   102                                              
+   103                                              
+   104                                              
+   105                                              
+   106                                              fin:
+   107 000000AE 83F8FF                                  cmp eax, -1
+   108 000000B1 740D                                    je f
+   109 000000B3 A1[00000000]                           mov eax, [contor]
+   110                                                 
+   111 000000B8 3B05[04000000]                         cmp eax, [numar]
+   112 000000BE 7401                                   je afis
+   113                                                 
+   114                                              f:
+   115 000000C0 C3                                     ret
+   116                                             
+   117                                          
+   118                                          afis:
+   119 000000C1 68[32000000]                        push cuv
+   120 000000C6 68[50000000]                        push format2
+   121 000000CB FF15[00000000]                      call [printf]
+   122 000000D1 83C408                              add esp, 4 * 2
+   123 000000D4 C3                                  ret
+   124                                          
+   125                                          final:
+   126 000000D5 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   127 000000D7 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

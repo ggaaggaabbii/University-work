@@ -1,0 +1,116 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fscanf, scanf, fprintf, fopen, fclose               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll
+     9                                  import fscanf msvcrt.dll
+    10                                  import scanf msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  import fopen msvcrt.dll
+    13                                  import fclose msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+    14                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    15                                  
+    16                                  ; our data is declared here (the variables needed by our program)
+    17                                  segment data use32 class=data
+    18                                      ; ...
+    19 00000000 <res 00000078>              sir resd 30
+    20 00000078 00                          lensir db 0
+    21 00000079 256400                      format_citire db "%d", 0
+    22 0000007C 7200                        format_deschidere_cirire db "r", 0
+    23 0000007E 7700                        format_deschidere_scriere db "w", 0
+    24 00000080 25642000                    format_afis db "%d ", 0
+    25 00000084 257300                      format_citire_nume db "%s", 0
+    26 00000087 <res 0000001E>              nume_fisier_citire resb 30
+    27 000000A5 <res 0000001E>              nume_fisier_scriere resb 30
+    28 000000C3 00000000                    descriptor_citire dd 0
+    29 000000C7 00000000                    descriptor_scriere dd 0
+    30 000000CB 04                          patru db 4
+    31                                      
+    32                                  
+    33                                  ; our code starts here
+    34                                  segment code use32 class=code
+    35                                      start:
+    36                                          ; ...
+    37 00000000 68[87000000]                    push nume_fisier_citire
+    38 00000005 68[84000000]                    push format_citire_nume
+    39 0000000A FF15[00000000]                  call [scanf]
+    40 00000010 83C408                          add esp, 4 * 2
+    41                                          
+    42 00000013 68[A5000000]                    push nume_fisier_scriere
+    43 00000018 68[84000000]                    push format_citire_nume
+    44 0000001D FF15[00000000]                  call [scanf]
+    45 00000023 83C408                          add esp, 4 * 2
+    46                                          
+    47 00000026 68[7C000000]                    push format_deschidere_cirire
+    48 0000002B 68[87000000]                    push nume_fisier_citire
+    49 00000030 FF15[00000000]                  call [fopen]
+    50 00000036 A3[C3000000]                    mov [descriptor_citire], eax
+    51 0000003B 83C408                          add esp, 4 * 2
+    52                                          
+    53 0000003E 68[7E000000]                    push format_deschidere_scriere
+    54 00000043 68[A5000000]                    push nume_fisier_scriere
+    55 00000048 FF15[00000000]                  call [fopen]
+    56 0000004E A3[C7000000]                    mov [descriptor_scriere], eax
+    57 00000053 83C408                          add esp, 4 * 2
+    58                                          
+    59                                          citire_fisier:
+    60 00000056 83F8FF                              cmp eax, -1
+    61 00000059 7430                                je next
+    62                                              
+    63 0000005B BB[00000000]                        mov ebx, sir
+    64 00000060 A0[78000000]                        mov al, [lensir]
+    65 00000065 F625[CB000000]                      mul byte [patru]
+    66 0000006B 98                                  cwde
+    67 0000006C 01D8                                add eax, ebx
+    68                                              
+    69                                              
+    70 0000006E 50                                  push eax
+    71 0000006F 68[79000000]                        push format_citire
+    72 00000074 FF35[C3000000]                      push dword [descriptor_citire]
+    73 0000007A FF15[00000000]                      call [fscanf]
+    74 00000080 83C40C                              add esp, 4 * 3
+    75 00000083 FE05[78000000]                      inc byte [lensir]
+    76 00000089 EBCB                                jmp citire_fisier
+    77                                              
+    78                                              
+    79                                          next:
+    80 0000008B A0[78000000]                        mov al, [lensir]
+    81 00000090 6698                                cbw
+    82 00000092 98                                  cwde
+    83 00000093 89C1                                mov ecx, eax
+    84 00000095 BE[00000000]                        mov esi, sir
+    85 0000009A 49                                  dec ecx
+    86                                              afis:
+    87 0000009B 83F900                                  cmp ecx, 0
+    88 0000009E 741F                                    je final
+    89 000000A0 51                                      push ecx
+    90 000000A1 AD                                      lodsd
+    91 000000A2 83F800                                  cmp eax, 0
+    92 000000A5 7A15                                    jp  notafis
+    93                                                  
+    94 000000A7 50                                      push eax
+    95 000000A8 68[80000000]                            push format_afis
+    96 000000AD FF35[C7000000]                          push dword [descriptor_scriere]
+    97 000000B3 FF15[00000000]                          call [fprintf]
+    98 000000B9 83C40C                                  add esp, 4 * 3
+    99                                                  
+   100                                                  notafis:
+   101 000000BC 59                                          pop ecx
+   102 000000BD E2DC                                        loop afis
+   103                                                  
+   104                                          
+   105                                          final:
+   106 000000BF FF35[C3000000]                      push dword [descriptor_citire]
+   107 000000C5 FF15[00000000]                      call [fclose]
+   108 000000CB 83C404                              add esp, 4 * 1
+   109 000000CE FF35[C7000000]                      push dword [descriptor_scriere]
+   110 000000D4 FF15[00000000]                      call [fclose]
+   111 000000DA 83C404                              add esp, 4 * 1
+   112                                              
+   113                                          ; exit(0)
+   114                                          
+   115 000000DD 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   116 000000DF FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,102 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, scanf, fprintf, fopen           ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  import scanf msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  import fopen msvcrt.dll
+    13                                  
+    14                                  ; our data is declared here (the variables needed by our program)
+    15                                  segment data use32 class=data
+    16                                      ; ...
+    17 00000000 <res 00000064>              sir1 resb 100
+    18 00000064 <res 00000064>              sir2 resb 100
+    19 000000C8 <res 000000C8>              sir3 resb 200
+    20 00000190 257300                      format_citire db "%s", 0
+    21 00000193 7700                        mod_deschidere db "w", 0
+    22 00000195 72657A756C7461742E-         nume_fisier db "rezultat.txt", 0
+    22 0000019E 74787400           
+    23 000001A2 00000000                    descriptor_fisier dd 0
+    24                                  
+    25                                  ; our code starts here
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ; Se dau doua siruri de caractere ordonate alfabetic s1 si s2. Sa se construiasca prin interclasare sirul ordonat s3 care sa contina toate ;elementele din s1 si s2.
+    29                                          ;sirurile vor fi citite de la tastatura iar rezultatul va fi afisat in fisierul rezultat.txt
+    30 00000000 68[00000000]                    push sir1
+    31 00000005 68[90010000]                    push format_citire
+    32 0000000A FF15[00000000]                  call [scanf]
+    33 00000010 83C408                          add esp, 4 * 2
+    34                                          
+    35 00000013 68[64000000]                    push sir2
+    36 00000018 68[90010000]                    push format_citire
+    37 0000001D FF15[00000000]                  call [scanf]
+    38 00000023 83C408                          add esp, 4 * 2
+    39                                          
+    40 00000026 68[93010000]                    push mod_deschidere
+    41 0000002B 68[95010000]                    push nume_fisier
+    42 00000030 FF15[00000000]                  call [fopen]
+    43 00000036 A3[A2010000]                    mov [descriptor_fisier], eax
+    44 0000003B 83C408                          add esp, 4 * 2
+    45                                          
+    46 0000003E BB[00000000]                    mov ebx, sir1
+    47 00000043 B9[64000000]                    mov ecx, sir2
+    48 00000048 BF[C8000000]                    mov edi, sir3
+    49                                          
+    50                                          interclasare:
+    51 0000004D 803B00                              cmp byte [ebx], 0
+    52 00000050 741A                                je sfsir1
+    53                                              
+    54 00000052 803900                              cmp byte[ecx], 0
+    55 00000055 7420                                je sfsir2
+    56                                              
+    57 00000057 E802000000                          call compare
+    58 0000005C EBEF                                jmp interclasare
+    59                                          
+    60                                          compare:
+    61 0000005E 8A03                                mov al, [ebx]
+    62 00000060 3A01                                cmp al, [ecx]
+    63 00000062 7F03                                jg compare2
+    64 00000064 AA                                  stosb
+    65 00000065 43                                  inc ebx
+    66 00000066 C3                                  ret
+    67                                              
+    68                                              compare2:
+    69 00000067 8A01                                mov al, [ecx]
+    70 00000069 AA                                  stosb
+    71 0000006A 41                                  inc ecx
+    72 0000006B C3                                  ret
+    73                                              
+    74                                      
+    75                                          ; exit(0)
+    76                                          sfsir1:
+    77 0000006C 803900                              cmp byte [ecx], 0
+    78 0000006F 7411                                je final
+    79 00000071 8A01                                mov al, [ecx]
+    80 00000073 AA                                  stosb
+    81 00000074 41                                  inc ecx
+    82 00000075 EBF5                                jmp sfsir1
+    83                                              
+    84                                          sfsir2:
+    85 00000077 803B00                              cmp byte [ebx], 0
+    86 0000007A 7406                                je final
+    87 0000007C 8A03                                mov al, [ebx]
+    88 0000007E AA                                  stosb
+    89 0000007F 43                                  inc ebx
+    90 00000080 EBF5                                jmp sfsir2
+    91                                          
+    92                                          final:
+    93 00000082 68[C8000000]                        push sir3
+    94 00000087 68[90010000]                        push format_citire
+    95 0000008C FF35[A2010000]                      push dword [descriptor_fisier]
+    96 00000092 FF15[00000000]                      call [fprintf]
+    97 00000098 83C40C                              add esp, 4 * 3
+    98                                              
+    99                                              
+   100 0000009B 6A00                                push    dword 0      ; push the parameter for exit onto the stack
+   101 0000009D FF15[00000000]                      call    [exit]       ; call exit to terminate the program
