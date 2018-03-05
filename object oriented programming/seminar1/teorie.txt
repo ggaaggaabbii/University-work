@@ -1,0 +1,39 @@
+.h 			files will cotain the declaration of the functions
+.c/.cpp 	source code files
+
+a.h:					a.c 					b.c
+#pragma once			#include a.h			#include b.h
+int f(int a);			int f(int a){			#include a.h
+							a++;
+b.h						}
+#include a.h			void f2(){
+							...
+						}
+						void f3(){
+						...
+						}
+
+memory allocation:
+
+#include <stdlib.h>
+
+int main() {
+	int a = 3; // allocation on the stack
+	f();
+	... n<-user
+	int *arr;
+	arr = (int*)malloc(n * sizeof(int));
+	.
+	.
+	.
+	free(arr);
+}
+pointeri(2007):
+int a = 3;
+int *p = &a;
+printf("%d\n", *p); // will print 3 D: D: D: D:
+printf("%d\n", &p); // will print the address of p
+
+a = 10;
+
+printf("%d\n", *p); // will print 10 D: D: D: D: D: D: D: D: D: D: D: D: D: D:
