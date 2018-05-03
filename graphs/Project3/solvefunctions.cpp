@@ -79,6 +79,7 @@ int numberOfDistinctMinimumCostWalks(Graph& g, int source, int dest)
 
             } else if (cost[node] + std::get<2>(g.getEdge(g.isEdge(node, it))) == cost[it]) {
                 distinctWalks[it] += distinctWalks[node];
+                PQ.push({ -cost[it], it});
             }
         }
     }
