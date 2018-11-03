@@ -1,0 +1,33 @@
+%maxpos(L - list, MaxL - list, output, MaxE - integer, Pos - integer)
+%flow model(i, i, i, i, o) - returns the result list
+%flow model(i, i, i, i, i) - checks if the result is the right one
+maxpos([], MaxL, _, _, R):- R = MaxL,
+    !.
+maxpos([H|T], MaxL, H, Pos, R):-P is Pos + 1,
+    MaxL2 = [Pos|MaxL],
+    maxpos(T, MaxL2, H, P, Rt),
+    R = Rt,
+    !.
+maxpos([H|T], _, MaxE, Pos, R):-H > MaxE,
+    P is Pos + 1,
+    maxpos(T, [Pos], H, P, Rt),
+    R = Rt,
+    !.
+maxpos([_|T], MaxL, MaxE, Pos, R):-P is Pos + 1,
+    maxpos(T, MaxL, MaxE, P, Rt),
+    R = Rt.
+
+%replace(L - list, R - list, result)
+%flow model(i, i) - check the given result
+%flow model(i, o) - compute the result
+replace([], []):-!.
+replace([H|T], R):-is_list(H),
+    replace(T, Rt),
+    P is 1,
+    maxpos(H, [], 0, P, Rm),
+    R = [Rm|Rt],
+    !.
+replace([H|T], R):-not(is_list(H)),
+    replace(T, Rt),
+    R = [H|Rt],
+    !.
