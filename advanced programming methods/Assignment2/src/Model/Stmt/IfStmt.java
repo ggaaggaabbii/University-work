@@ -32,4 +32,9 @@ public class IfStmt implements IStmt {
 	public String toString() {
 		return "IF(" + exp.toString() + ") THEN(" + thenS.toString() + ")ELSE(" + elseS.toString() + ")";
 	}
+
+	@Override
+	public IStmt deepCopy() {
+		return new IfStmt(exp, thenS.deepCopy(), elseS.deepCopy());
+	}
 }

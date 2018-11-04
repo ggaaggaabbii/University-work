@@ -1,6 +1,7 @@
 package Model.ADTs;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class MyMap<K, V> implements MyIMap<K, V> {
 
@@ -52,10 +53,15 @@ public class MyMap<K, V> implements MyIMap<K, V> {
 
 	@Override
 	public String toString() {
-		String result = "{";
+		String result = "";
 		for (K a : map.keySet()) {
-			result += "<" + a.toString() + ", " + map.get(a) + ">; ";
+			result += a.toString() + " -> " + map.get(a) + "\n";
 		}
-		return result + "}";
+		return result;
+	}
+
+	@Override
+	public Set<K> keySet() {
+		return map.keySet();
 	}
 }

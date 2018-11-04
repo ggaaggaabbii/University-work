@@ -26,4 +26,9 @@ public class PrintStmt implements IStmt {
 	public PrintStmt(Exp exp) {
 		this.exp = exp;
 	}
+
+	@Override
+	public IStmt deepCopy() {
+		return new PrintStmt(exp);
+	}
 }

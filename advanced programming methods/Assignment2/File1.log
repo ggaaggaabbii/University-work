@@ -1,0 +1,39 @@
+Prg state:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+
+Prg state:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+
+Prg state:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+
+Prg state:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+
+Prg state:
+ExeStack:
+SymTable:
+v -> 2
+Out:
+2
+11
+

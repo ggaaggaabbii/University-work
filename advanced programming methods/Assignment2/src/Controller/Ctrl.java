@@ -17,13 +17,11 @@ public class Ctrl {
 			throw new MyStmtExecException("Finished program");
 		}
 		IStmt crtStmt = stack.pop();
-		if (printFlag) {
-			System.out.println(crtStmt);
-		}
 		return crtStmt.execute(state);
 	}
 
 	public void allSteps() throws MyStmtExecException {
+		repo.resetPtgState();
 		PrgState prgState = repo.getCrtProg();
 		MyIStack<IStmt> stack = prgState.getExeStack();
 		MyIList<Integer> output = prgState.getOut();
@@ -31,12 +29,8 @@ public class Ctrl {
 		while (!stack.empty()) {
 			oneStep(prgState);
 			if (printFlag) {
-				System.out.println(prgState);
+				repo.logPrgState();
 			}
-		}
-
-		for (int i = 0; i < output.size(); ++i) {
-			System.out.println(output.get(i));
 		}
 	}
 

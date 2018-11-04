@@ -1,20 +1,42 @@
 package View;
 
-import Controller.Ctrl;
-import Model.Exceptions.MyStmtExecException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+import Model.Commands.Command;
 
 public class Ui {
-	Ctrl ctrl;
+	private Map<String, Command> commands;
 
-	public void start() {
-		try {
-			ctrl.allSteps();
-		} catch (MyStmtExecException e) {
-			System.out.println(e.getMessage());
+	public Ui() {
+		commands = new HashMap<>();
+	}
+
+	public void addCommand(Command c) {
+		commands.put(c.getKey(), c);
+	}
+
+	private void printMenu() {
+		for (Command com : commands.values()) {
+			String line = String.format("%s. %s", com.getKey(), com.getDescription());
+			System.out.println(line);
 		}
 	}
 
-	public Ui(Ctrl ctrl) {
-		this.ctrl = ctrl;
+	public void show() {
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		while (true) {
+			printMenu();
+			System.out.printf("Input the option: ");
+			String key = scanner.nextLine();
+			Command com = commands.get(key);
+			if (com == null) {
+				System.out.println("Invalid Option");
+				continue;
+			}
+			com.execute();
+		}
 	}
 }

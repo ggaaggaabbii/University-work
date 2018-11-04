@@ -42,10 +42,10 @@ public class MyList<E> implements MyIList<E> {
 
 	@Override
 	public String toString() {
-		String result = "{";
+		String result = "";
 		for (E a : list) {
-			result += a.toString() + "; ";
+			result += a.toString() + "\n";
 		}
-		return result + "}";
+		return result + "";
 	}
 }

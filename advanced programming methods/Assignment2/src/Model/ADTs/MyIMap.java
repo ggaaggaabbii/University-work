@@ -1,5 +1,7 @@
 package Model.ADTs;
 
+import java.util.Set;
+
 public interface MyIMap<K, V> {
 	void clear();
 
@@ -16,4 +18,6 @@ public interface MyIMap<K, V> {
 	V put(K key, V value);
 
 	boolean isEmpty();
+
+	Set<K> keySet();
 }

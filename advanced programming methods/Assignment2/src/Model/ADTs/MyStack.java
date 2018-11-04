@@ -37,10 +37,10 @@ public class MyStack<E> implements MyIStack<E> {
 
 	@Override
 	public String toString() {
-		String result = "{";
+		String result = "";
 		for (E a : stack) {
-			result += a.toString() + "; ";
+			result = a.toString() + "\n" + result;
 		}
-		return result + "}";
+		return result;
 	}
 }
