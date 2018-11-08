@@ -26,8 +26,8 @@ VALUES (1, 1),
 	   (3, 4),
 	   (2, 2),
 	   (5, 1),
-	   (5, 2),
-	   (6, 3)
+	   (5, 3),
+	   (6, 4)
 
 INSERT INTO Restaurant(hid, opening_hour, closing_hour)
 VALUES (1, 12, 22),

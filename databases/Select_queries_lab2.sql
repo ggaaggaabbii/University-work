@@ -122,18 +122,32 @@ SELECT *
 FROM Employee E FULL JOIN Employs E2 ON E.eid = E2.eid
 FULL JOIN Hotel H ON E2.hid = H.hid
 
---All recipes served in restaurants
-SELECT *
+--Hotels that have Restaurants that serve sweet recipes
+SELECT DISTINCT H.name
 FROM Restaurant R FULL JOIN Serves S ON S.reid = R.rid
 FULL JOIN Recipe Re ON Re.rid = S.rid
 FULL JOIN Containing C ON Re.rid = C.rid
 FULL JOIN Ingredient I ON C.iid = I.iid
+RIGHT JOIN Hotel H ON R.hid = H.hid
+WHERE I.taste LIKE '%sweet%'
 
 --Chefs and the Cities the work in
-SELECT *
+SELECT C.name, Ci.name
 FROM Chef C FULL JOIN Restaurant R ON C.rid = R.rid
 FULL JOIN Hotel H ON R.hid = H.hid
 FULL JOIN City Ci ON Ci.cid = H.cid
+
+--For each employee show the hotel they work in
+SELECT E.name, H.name
+FROM Employee E INNER JOIN Employs Em ON Em.eid = E.eid
+INNER JOIN Hotel H on Em.hid = H.hid
+
+--For each employee show the city they work in
+SELECT E.name, C.name
+FROM Employee E INNER JOIN Employs Em ON Em.eid = E.eid
+INNER JOIN Hotel H on Em.hid = H.hid
+INNER JOIN City C ON H.cid = C.cid
+
 
 --Recipes that contain sweet Ingredients
 SELECT R.is_vegan, R.original_country, R.price
@@ -269,3 +283,37 @@ FROM Hotel H
 WHERE dbo.ufnGetNumberOfEmployees(hid) > ANY(SELECT dbo.ufnGetNumberOfEmployees(hid) as number
 											 FROM Hotel H
 											 WHERE H.name LIKE '%Paradis%')
+
+--maximum salary for each hotel
+SELECT H.name, MAX(E.salary)
+FROM Employee E, Hotel H, Employs Em
+WHERE E.eid = Em.eid AND Em.hid = H.hid
+GROUP BY H.name
+
+--maximum salary for each hotel that has a minimum of 2 emplyees
+--subquery is not necesary
+SELECT H.name, MAX(E.salary)
+FROM Employee E, Hotel H, Employs Em
+WHERE E.eid = Em.eid AND Em.hid = H.hid
+GROUP BY H.name
+HAVING 2 <= (SELECT COUNT(*)
+			 FROM Employee E2, Hotel H2, Employs Em2
+			 WHERE E2.eid = Em2.eid AND Em2.hid = H2.hid AND H.name = H2.name)
+
+--countries and the number of ingredients used for recipes if they have more than 2
+SELECT R.original_country, COUNT(*)
+FROM Ingredient I, Recipe R
+GROUP BY R.original_country
+HAVING COUNT(*) > 2
+
+--Countries and the number of ingredients used for recipes if they have more than 2 sweet ingredients
+--subquery is necesary
+SELECT R.original_country, COUNT(*)
+FROM Ingredient I INNER JOIN Containing C ON C.iid = I.iid
+INNER JOIN Recipe R ON R.rid = C.rid
+GROUP BY R.original_country
+HAVING 2 <= (SELECT COUNT(*)
+			 FROM Ingredient I2
+			 INNER JOIN Containing C ON C.iid = I2.iid
+			 INNER JOIN Recipe R2 ON C.rid = R2.rid 
+			 WHERE I2.taste LIKE '%sweet%' AND R2.original_country = R.original_country)
