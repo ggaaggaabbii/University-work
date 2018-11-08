@@ -4,6 +4,7 @@ openRFile(var_f, "test.in")
 (readFile(var_f, var_c); (Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))))
 SymTable:
 Out:
+FileTable:
 
 Prg state:
 ExeStack:
@@ -11,6 +12,8 @@ ExeStack:
 SymTable:
 var_f -> 1
 Out:
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -19,6 +22,8 @@ readFile(var_f, var_c)
 SymTable:
 var_f -> 1
 Out:
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -27,6 +32,8 @@ SymTable:
 var_f -> 1
 var_c -> 3
 Out:
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -36,6 +43,8 @@ SymTable:
 var_f -> 1
 var_c -> 3
 Out:
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -45,6 +54,8 @@ var_f -> 1
 var_c -> 3
 Out:
 3
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -55,6 +66,8 @@ var_f -> 1
 var_c -> 3
 Out:
 3
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -66,6 +79,8 @@ var_f -> 1
 var_c -> 3
 Out:
 3
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -76,6 +91,8 @@ var_f -> 1
 var_c -> 50
 Out:
 3
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -86,6 +103,8 @@ var_c -> 50
 Out:
 3
 50
+FileTable:
+1 -> test.in=java.io.BufferedReader@7d4991ad
 
 Prg state:
 ExeStack:
@@ -95,4 +114,5 @@ var_c -> 50
 Out:
 3
 50
+FileTable:
 

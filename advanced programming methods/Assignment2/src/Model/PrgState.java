@@ -70,7 +70,7 @@ public class PrgState {
 	@Override
 	public String toString() {
 		return "Prg state:\nExeStack:\n" + exeStack.toString() + "SymTable:\n" + symTable.toString() + "Out:\n"
-				+ out.toString();
+				+ out.toString() + "FileTable:\n" + FileTable.toString();
 	}
 
 	public static Integer getFileDescr() {

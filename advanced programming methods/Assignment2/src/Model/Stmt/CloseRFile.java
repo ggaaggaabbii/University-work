@@ -34,7 +34,7 @@ public class CloseRFile implements IStmt {
 		} catch (IOException e) {
 			throw new MyStmtExecException("File could not be closed: " + file.getKey());
 		}
-
+		fileTable.remove(fileDresc);
 		return state;
 	}
 

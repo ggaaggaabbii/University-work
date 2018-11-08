@@ -35,7 +35,7 @@ public class ReadFileStmt implements IStmt {
 		try {
 			nextInt = Integer.parseInt(in.readLine());
 		} catch (Exception e) {
-			throw new MyStmtExecException("Invalid input from the file");
+			nextInt = 0;
 		}
 
 		tbl.put(varName, nextInt);

@@ -30,7 +30,7 @@ public class App {
 
 	public static void main(String[] args) {
 		boolean debugFlag = true;
-		IStmt[] examples = new IStmt[9];
+		IStmt[] examples = new IStmt[10];
 
 		/*
 		 * v=2;Print(v);Print(5+6)
@@ -111,6 +111,19 @@ public class App {
 												new PrintStmt(new VarExp("var_c"))),
 										new PrintStmt(new ConstExp(0))),
 								new CloseRFile(new VarExp("var_f"))))));
+
+		/*
+		 * readFile(var_f,var_c); print(var_c); (if var_c then readFile(var_f,var_c);
+		 * print(var_c) else print(0)); closeRFile(var_f)
+		 */
+		examples[9] = new CompStmt(new ReadFileStmt(new VarExp("var_f"), "var_c"),
+				new CompStmt(new PrintStmt(new VarExp("var_c")),
+						new CompStmt(
+								new IfStmt(new VarExp("var_c"),
+										new CompStmt(new ReadFileStmt(new VarExp("var_f"), "var_c"),
+												new PrintStmt(new VarExp("var_c"))),
+										new PrintStmt(new ConstExp(0))),
+								new CloseRFile(new VarExp("var_f")))));
 
 		Ui ui = new Ui();
 		ExitCommand exitCommand = new ExitCommand("0", "Exit");
