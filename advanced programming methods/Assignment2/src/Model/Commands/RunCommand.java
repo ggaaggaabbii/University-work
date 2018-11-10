@@ -20,6 +20,12 @@ public class RunCommand extends Command {
 			ctrl.allSteps();
 		} catch (MyStmtExecException e) {
 			System.out.println(e.getMessage());
+		} finally {
+			try {
+				ctrl.closeAllFiles();
+			} catch (MyStmtExecException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 

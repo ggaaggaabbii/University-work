@@ -1,1 +1,48 @@
+Prg state:
+ExeStack:
+a = (2 - 2)
+(IF(a) THEN(v = 2)ELSE(v = 3); Print(v))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(IF(a) THEN(v = 2)ELSE(v = 3); Print(v))
+SymTable:
+a -> 0
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+IF(a) THEN(v = 2)ELSE(v = 3)
+Print(v)
+SymTable:
+a -> 0
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+Print(v)
+SymTable:
+a -> 0
+v -> 3
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+SymTable:
+a -> 0
+v -> 3
+Out:
+3
+FileTable:
+Heap:
 

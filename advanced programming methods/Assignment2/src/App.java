@@ -13,15 +13,18 @@ import Model.Commands.ExitCommand;
 import Model.Commands.RunCommand;
 import Model.Expresions.ArithExp;
 import Model.Expresions.ConstExp;
+import Model.Expresions.ReadHeapExp;
 import Model.Expresions.VarExp;
 import Model.Stmt.AssignStmt;
 import Model.Stmt.CloseRFile;
 import Model.Stmt.CompStmt;
+import Model.Stmt.HeapAllocStmt;
 import Model.Stmt.IStmt;
 import Model.Stmt.IfStmt;
 import Model.Stmt.OpenRFileStmt;
 import Model.Stmt.PrintStmt;
 import Model.Stmt.ReadFileStmt;
+import Model.Stmt.WriteHeapStmt;
 import Repository.Repo;
 import View.Ui;
 import javafx.util.Pair;
@@ -30,7 +33,7 @@ public class App {
 
 	public static void main(String[] args) {
 		boolean debugFlag = true;
-		IStmt[] examples = new IStmt[10];
+		IStmt[] examples = new IStmt[14];
 
 		/*
 		 * v=2;Print(v);Print(5+6)
@@ -125,6 +128,40 @@ public class App {
 										new PrintStmt(new ConstExp(0))),
 								new CloseRFile(new VarExp("var_f")))));
 
+		/*
+		 * v=10;new(v,20);new(a,22);print(v)
+		 */
+		examples[10] = new CompStmt(new AssignStmt("v", new ConstExp(10)),
+				new CompStmt(new HeapAllocStmt("v", new ConstExp(20)),
+						new CompStmt(new HeapAllocStmt("a", new ConstExp(22)), new PrintStmt(new VarExp("v")))));
+
+		/*
+		 * v=10;new(v,20);new(a,22);print(100+rH(v));print(100+rH(a))
+		 */
+		examples[11] = new CompStmt(new AssignStmt("v", new ConstExp(10)),
+				new CompStmt(new HeapAllocStmt("v", new ConstExp(20)),
+						new CompStmt(new HeapAllocStmt("a", new ConstExp(22)),
+								new CompStmt(new PrintStmt(new ArithExp("+", new ConstExp(100), new ReadHeapExp("v"))),
+										new PrintStmt(new ArithExp("+", new ConstExp(100), new ReadHeapExp("a")))))));
+		/*
+		 * v=10;new(v,20);new(a,22);wH(a,30);print(a);print(rH(a))
+		 */
+		examples[12] = new CompStmt(new AssignStmt("v", new ConstExp(10)),
+				new CompStmt(new HeapAllocStmt("v", new ConstExp(20)),
+						new CompStmt(new HeapAllocStmt("a", new ConstExp(22)), new CompStmt(
+								new WriteHeapStmt("a", new ConstExp(30)),
+								new CompStmt(new PrintStmt(new VarExp("a")), new PrintStmt(new ReadHeapExp("a")))))));
+		/*
+		 * v=10;new(v,20);new(a,22);wH(a,30);print(a);print(rH(a));a=0
+		 */
+		examples[13] = new CompStmt(new AssignStmt("v", new ConstExp(10)),
+				new CompStmt(new HeapAllocStmt("v", new ConstExp(20)),
+						new CompStmt(new HeapAllocStmt("a", new ConstExp(22)),
+								new CompStmt(new WriteHeapStmt("a", new ConstExp(30)),
+										new CompStmt(new PrintStmt(new VarExp("a")),
+												new CompStmt(new PrintStmt(new ReadHeapExp("a")),
+														new AssignStmt("a", new ConstExp(10))))))));
+
 		Ui ui = new Ui();
 		ExitCommand exitCommand = new ExitCommand("0", "Exit");
 		ui.addCommand(exitCommand);
@@ -135,8 +172,9 @@ public class App {
 			MyIList<Integer> output = new MyList<Integer>();
 			MyIMap<String, Integer> symTable = new MyMap<String, Integer>();
 			MyIMap<Integer, Pair<String, BufferedReader>> fileTable = new MyMap<Integer, Pair<String, BufferedReader>>();
+			MyIMap<Integer, Integer> heap = new MyMap<Integer, Integer>();
 
-			PrgState prgState = new PrgState(stack, symTable, output, fileTable, examples[i - 1]);
+			PrgState prgState = new PrgState(stack, symTable, output, fileTable, heap, examples[i - 1]);
 			Repo repo = new Repo(prgState, "File" + i.toString() + ".log");
 			Ctrl ctrl = new Ctrl(repo, debugFlag);
 			RunCommand runCommand = new RunCommand(i.toString(),

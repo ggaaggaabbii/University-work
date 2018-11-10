@@ -23,8 +23,9 @@ public class ReadFileStmt implements IStmt {
 		MyIStack<IStmt> exeStack = state.getExeStack();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = state.getFileTable();
 		MyIMap<String, Integer> tbl = state.getSymTable();
+		MyIMap<Integer, Integer> heap = state.getHeap();
 
-		Integer fileDresc = fileId.eval(tbl);
+		Integer fileDresc = fileId.eval(tbl, heap);
 		Pair<String, BufferedReader> file = fileTable.get(fileDresc);
 		if (file == null) {
 			throw new MyStmtExecException("Invalid file descriptor");

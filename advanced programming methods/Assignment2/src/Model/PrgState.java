@@ -13,6 +13,7 @@ public class PrgState {
 	MyIList<Integer> out;
 	MyIMap<String, Integer> symTable;
 	MyIMap<Integer, Pair<String, BufferedReader>> FileTable;
+	MyIMap<Integer, Integer> Heap;
 	IStmt originalProgram;
 
 	static Integer fileId = 0;
@@ -57,12 +58,21 @@ public class PrgState {
 		FileTable = fileTable;
 	}
 
+	public void setHeap(MyIMap<Integer, Integer> heap) {
+		Heap = heap;
+	}
+
+	public MyIMap<Integer, Integer> getHeap() {
+		return Heap;
+	}
+
 	public PrgState(MyIStack<IStmt> stk, MyIMap<String, Integer> symtbl, MyIList<Integer> ot,
-			MyIMap<Integer, Pair<String, BufferedReader>> ft, IStmt prg) {
+			MyIMap<Integer, Pair<String, BufferedReader>> ft, MyIMap<Integer, Integer> heap, IStmt prg) {
 		exeStack = stk;
 		symTable = symtbl;
 		out = ot;
 		FileTable = ft;
+		Heap = heap;
 		originalProgram = prg.deepCopy();
 		exeStack.push(prg);
 	}
@@ -70,7 +80,7 @@ public class PrgState {
 	@Override
 	public String toString() {
 		return "Prg state:\nExeStack:\n" + exeStack.toString() + "SymTable:\n" + symTable.toString() + "Out:\n"
-				+ out.toString() + "FileTable:\n" + FileTable.toString();
+				+ out.toString() + "FileTable:\n" + FileTable.toString() + "Heap:\n" + Heap.toString();
 	}
 
 	public static Integer getFileDescr() {

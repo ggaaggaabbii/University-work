@@ -59,7 +59,8 @@ public class Repo implements MyIRepo {
 		MyIList<Integer> output = new MyList<Integer>();
 		MyIMap<String, Integer> symTable = new MyMap<String, Integer>();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = new MyMap<Integer, Pair<String, BufferedReader>>();
+		MyIMap<Integer, Integer> heap = new MyMap<Integer, Integer>();
 
-		crtState = new PrgState(stack, symTable, output, fileTable, originalProgram.deepCopy());
+		crtState = new PrgState(stack, symTable, output, fileTable, heap, originalProgram.deepCopy());
 	}
 }

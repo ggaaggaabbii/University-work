@@ -8,7 +8,7 @@ public class VarExp extends Exp {
 	String id;
 
 	@Override
-	public int eval(MyIMap<String, Integer> tbl) throws MyStmtExecException {
+	public int eval(MyIMap<String, Integer> tbl, MyIMap<Integer, Integer> heap) throws MyStmtExecException {
 		if (tbl.get(id) == null) {
 			throw new MyStmtExecException("Undefined variable: " + id);
 		}

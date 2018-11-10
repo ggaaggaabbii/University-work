@@ -1,0 +1,100 @@
+Prg state:
+ExeStack:
+v = 10
+(new(v, 20); (new(a, 22); (Print((100 + rH(v))); Print((100 + rH(a))))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(new(v, 20); (new(a, 22); (Print((100 + rH(v))); Print((100 + rH(a))))))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+new(v, 20)
+(new(a, 22); (Print((100 + rH(v))); Print((100 + rH(a)))))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(new(a, 22); (Print((100 + rH(v))); Print((100 + rH(a)))))
+SymTable:
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+
+Prg state:
+ExeStack:
+new(a, 22)
+(Print((100 + rH(v))); Print((100 + rH(a))))
+SymTable:
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+
+Prg state:
+ExeStack:
+(Print((100 + rH(v))); Print((100 + rH(a))))
+SymTable:
+a -> 2
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+
+Prg state:
+ExeStack:
+Print((100 + rH(v)))
+Print((100 + rH(a)))
+SymTable:
+a -> 2
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+
+Prg state:
+ExeStack:
+Print((100 + rH(a)))
+SymTable:
+a -> 2
+v -> 1
+Out:
+120
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+
+Prg state:
+ExeStack:
+SymTable:
+a -> 2
+v -> 1
+Out:
+120
+122
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+

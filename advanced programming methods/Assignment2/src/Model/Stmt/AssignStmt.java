@@ -15,7 +15,8 @@ public class AssignStmt implements IStmt {
 	public PrgState execute(PrgState state) throws MyStmtExecException {
 		MyIStack<IStmt> stack = state.getExeStack();
 		MyIMap<String, Integer> symTable = state.getSymTable();
-		int val = exp.eval(symTable);
+		MyIMap<Integer, Integer> heap = state.getHeap();
+		int val = exp.eval(symTable, heap);
 		symTable.put(id, val);
 		return state;
 	}

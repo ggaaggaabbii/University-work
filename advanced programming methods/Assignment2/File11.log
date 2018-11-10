@@ -1,0 +1,73 @@
+Prg state:
+ExeStack:
+v = 10
+(new(v, 20); (new(a, 22); Print(v)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(new(v, 20); (new(a, 22); Print(v)))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+new(v, 20)
+(new(a, 22); Print(v))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(new(a, 22); Print(v))
+SymTable:
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+
+Prg state:
+ExeStack:
+new(a, 22)
+Print(v)
+SymTable:
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+
+Prg state:
+ExeStack:
+Print(v)
+SymTable:
+a -> 2
+v -> 1
+Out:
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+
+Prg state:
+ExeStack:
+SymTable:
+a -> 2
+v -> 1
+Out:
+1
+FileTable:
+Heap:
+1 -> 20
+2 -> 22
+

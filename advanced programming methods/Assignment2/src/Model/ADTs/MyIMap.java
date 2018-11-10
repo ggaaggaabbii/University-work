@@ -1,5 +1,7 @@
 package Model.ADTs;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public interface MyIMap<K, V> {
@@ -20,4 +22,11 @@ public interface MyIMap<K, V> {
 	boolean isEmpty();
 
 	Set<K> keySet();
+
+	Set<Entry<K, V>> entrySet();
+
+	HashMap<K, V> getContent();
+
+	void setContent(MyIMap<K, V> newMap);
+
 }

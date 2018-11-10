@@ -1,6 +1,8 @@
 package Model.ADTs;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class MyMap<K, V> implements MyIMap<K, V> {
@@ -51,6 +53,10 @@ public class MyMap<K, V> implements MyIMap<K, V> {
 		map = new HashMap<K, V>();
 	}
 
+	public MyMap(Map<K, V> map) {
+		this.map = new HashMap<K, V>(map);
+	}
+
 	@Override
 	public String toString() {
 		String result = "";
@@ -64,4 +70,20 @@ public class MyMap<K, V> implements MyIMap<K, V> {
 	public Set<K> keySet() {
 		return map.keySet();
 	}
+
+	@Override
+	public Set<Entry<K, V>> entrySet() {
+		return map.entrySet();
+	}
+
+	@Override
+	public HashMap<K, V> getContent() {
+		return map;
+	}
+
+	@Override
+	public void setContent(MyIMap<K, V> newMap) {
+		map = newMap.getContent();
+	}
+
 }

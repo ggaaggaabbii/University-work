@@ -10,18 +10,18 @@ public class ArithExp extends Exp {
 	String op;
 
 	@Override
-	public int eval(MyIMap<String, Integer> tbl) throws MyStmtExecException {
+	public int eval(MyIMap<String, Integer> tbl, MyIMap<Integer, Integer> heap) throws MyStmtExecException {
 		if (op == "+") {
-			return e1.eval(tbl) + e2.eval(tbl);
+			return e1.eval(tbl, heap) + e2.eval(tbl, heap);
 		} else if (op == "-") {
-			return e1.eval(tbl) - e2.eval(tbl);
+			return e1.eval(tbl, heap) - e2.eval(tbl, heap);
 		} else if (op == "*") {
-			return e1.eval(tbl) * e2.eval(tbl);
+			return e1.eval(tbl, heap) * e2.eval(tbl, heap);
 		} else {
-			if (e2.eval(tbl) == 0) {
+			if (e2.eval(tbl, heap) == 0) {
 				throw new MyStmtExecException("Division By 0");
 			}
-			return e1.eval(tbl) / e2.eval(tbl);
+			return e1.eval(tbl, heap) / e2.eval(tbl, heap);
 		}
 	}
 

@@ -5,6 +5,7 @@ openRFile(var_f, "test2.in")
 SymTable:
 Out:
 FileTable:
+Heap:
 
 Prg state:
 ExeStack:
@@ -13,7 +14,8 @@ SymTable:
 var_f -> 1
 Out:
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -23,7 +25,8 @@ SymTable:
 var_f -> 1
 Out:
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -33,7 +36,8 @@ var_f -> 1
 var_c -> 0
 Out:
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -44,7 +48,8 @@ var_f -> 1
 var_c -> 0
 Out:
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -55,7 +60,8 @@ var_c -> 0
 Out:
 0
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -67,7 +73,8 @@ var_c -> 0
 Out:
 0
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -79,7 +86,8 @@ Out:
 0
 0
 FileTable:
-1 -> test2.in=java.io.BufferedReader@7d4991ad
+1 -> test2.in=java.io.BufferedReader@4f3f5b24
+Heap:
 
 Prg state:
 ExeStack:
@@ -90,4 +98,5 @@ Out:
 0
 0
 FileTable:
+Heap:
 

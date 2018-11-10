@@ -7,7 +7,7 @@ public class ConstExp extends Exp {
 	int number;
 
 	@Override
-	public int eval(MyIMap<String, Integer> tbl) {
+	public int eval(MyIMap<String, Integer> tbl, MyIMap<Integer, Integer> heap) {
 		return number;
 	}
 

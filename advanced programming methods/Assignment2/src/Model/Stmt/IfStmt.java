@@ -14,11 +14,13 @@ public class IfStmt implements IStmt {
 	@Override
 	public PrgState execute(PrgState state) throws MyStmtExecException {
 		MyIMap<String, Integer> tbl = state.getSymTable();
-		if (exp.eval(tbl) != 0) {
+		MyIMap<Integer, Integer> heap = state.getHeap();
+		if (exp.eval(tbl, heap) != 0) {
 			thenS.execute(state);
 		} else {
 			elseS.execute(state);
 		}
+
 		return null;
 	}
 
