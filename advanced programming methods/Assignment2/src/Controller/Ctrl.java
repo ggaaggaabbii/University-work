@@ -57,16 +57,15 @@ public class Ctrl {
 	}
 
 	public void closeAllFiles() throws MyStmtExecException {
+		System.out.println("Closing remaining files");
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = repo.getCrtProg().getFileTable();
 
-		for (Integer fileDesc : fileTable.keySet()) {
-			Pair<String, BufferedReader> file = fileTable.get(fileDesc);
-			BufferedReader fileReader = file.getValue();
+		fileTable.entrySet().stream().map(e -> e.getValue().getValue()).forEach(e -> {
 			try {
-				fileReader.close();
-			} catch (IOException e) {
-				throw new MyStmtExecException("Error trying to close file:" + file.getKey());
+				e.close();
+			} catch (IOException ex) {
+				System.out.println("Could not close file");
 			}
-		}
+		});
 	}
 }

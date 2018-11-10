@@ -12,6 +12,7 @@ import Model.ADTs.MyStack;
 import Model.Commands.ExitCommand;
 import Model.Commands.RunCommand;
 import Model.Expresions.ArithExp;
+import Model.Expresions.BooleanExp;
 import Model.Expresions.ConstExp;
 import Model.Expresions.ReadHeapExp;
 import Model.Expresions.VarExp;
@@ -24,6 +25,7 @@ import Model.Stmt.IfStmt;
 import Model.Stmt.OpenRFileStmt;
 import Model.Stmt.PrintStmt;
 import Model.Stmt.ReadFileStmt;
+import Model.Stmt.WhileStmt;
 import Model.Stmt.WriteHeapStmt;
 import Repository.Repo;
 import View.Ui;
@@ -33,7 +35,7 @@ public class App {
 
 	public static void main(String[] args) {
 		boolean debugFlag = true;
-		IStmt[] examples = new IStmt[14];
+		IStmt[] examples = new IStmt[16];
 
 		/*
 		 * v=2;Print(v);Print(5+6)
@@ -161,6 +163,22 @@ public class App {
 										new CompStmt(new PrintStmt(new VarExp("a")),
 												new CompStmt(new PrintStmt(new ReadHeapExp("a")),
 														new AssignStmt("a", new ConstExp(10))))))));
+
+		/*
+		 * print(10 + (2<6)) //should print 11
+		 */
+		examples[14] = new PrintStmt(
+				new ArithExp("+", new ConstExp(10), new BooleanExp("<", new ConstExp(2), new ConstExp(6))));
+
+		/*
+		 * v=6; (while (v-4) print(v);v=v-1);print(v)
+		 */
+		examples[15] = new CompStmt(new AssignStmt("v", new ConstExp(6)), new CompStmt(
+				new WhileStmt(
+						new BooleanExp("!=", new ArithExp("-", new VarExp("v"), new ConstExp(4)), new ConstExp(0)),
+						new CompStmt(new PrintStmt(new VarExp("v")),
+								new AssignStmt("v", new ArithExp("-", new VarExp("v"), new ConstExp(1))))),
+				new PrintStmt(new VarExp("v"))));
 
 		Ui ui = new Ui();
 		ExitCommand exitCommand = new ExitCommand("0", "Exit");

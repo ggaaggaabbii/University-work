@@ -1,0 +1,168 @@
+Prg state:
+ExeStack:
+v = 6
+(while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}; Print(v))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}; Print(v))
+SymTable:
+v -> 6
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 6
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(Print(v); v = (v - 1))
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 6
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+Print(v)
+v = (v - 1)
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 6
+Out:
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+v = (v - 1)
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 6
+Out:
+6
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 5
+Out:
+6
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+(Print(v); v = (v - 1))
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 5
+Out:
+6
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+Print(v)
+v = (v - 1)
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 5
+Out:
+6
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+v = (v - 1)
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 5
+Out:
+6
+5
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+while(((v - 4) != 0)) {
+	(Print(v); v = (v - 1))
+}
+Print(v)
+SymTable:
+v -> 4
+Out:
+6
+5
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+Print(v)
+SymTable:
+v -> 4
+Out:
+6
+5
+FileTable:
+Heap:
+
+Prg state:
+ExeStack:
+SymTable:
+v -> 4
+Out:
+6
+5
+4
+FileTable:
+Heap:
+
