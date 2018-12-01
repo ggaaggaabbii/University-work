@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 
 import Model.PrgState;
 import Model.ADTs.MyIMap;
-import Model.ADTs.MyIStack;
 import Model.Exceptions.MyStmtExecException;
 import Model.Expresions.Exp;
 import javafx.util.Pair;
@@ -20,7 +19,6 @@ public class ReadFileStmt implements IStmt {
 
 	@Override
 	public PrgState execute(PrgState state) throws MyStmtExecException {
-		MyIStack<IStmt> exeStack = state.getExeStack();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = state.getFileTable();
 		MyIMap<String, Integer> tbl = state.getSymTable();
 		MyIMap<Integer, Integer> heap = state.getHeap();
@@ -40,7 +38,7 @@ public class ReadFileStmt implements IStmt {
 		}
 
 		tbl.put(varName, nextInt);
-		return state;
+		return null;
 	}
 
 	@Override

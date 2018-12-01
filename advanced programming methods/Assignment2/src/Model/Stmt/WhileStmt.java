@@ -27,7 +27,7 @@ public class WhileStmt implements IStmt {
 			exeStack.push(codeBlock);
 		}
 
-		return state;
+		return null;
 	}
 
 	@Override

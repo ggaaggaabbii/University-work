@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import Model.PrgState;
 import Model.ADTs.MyIMap;
-import Model.ADTs.MyIStack;
 import Model.Exceptions.MyStmtExecException;
 import javafx.util.Pair;
 
@@ -21,7 +20,6 @@ public class OpenRFileStmt implements IStmt {
 
 	@Override
 	public PrgState execute(PrgState state) throws MyStmtExecException {
-		MyIStack<IStmt> exeStack = state.getExeStack();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = state.getFileTable();
 		MyIMap<String, Integer> tbl = state.getSymTable();
 		for (Integer a : fileTable.keySet()) {
@@ -39,7 +37,7 @@ public class OpenRFileStmt implements IStmt {
 		Integer fileDescr = PrgState.getFileDescr();
 		fileTable.put(fileDescr, new Pair<String, BufferedReader>(fileName, in));
 		tbl.put(varId, fileDescr);
-		return state;
+		return null;
 	}
 
 	@Override

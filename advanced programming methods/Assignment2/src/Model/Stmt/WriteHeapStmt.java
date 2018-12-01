@@ -31,7 +31,7 @@ public class WriteHeapStmt implements IStmt {
 
 		heap.put(adr, expresion.eval(tbl, heap));
 
-		return state;
+		return null;
 	}
 
 	@Override

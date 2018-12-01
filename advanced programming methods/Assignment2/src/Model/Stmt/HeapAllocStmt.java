@@ -23,7 +23,7 @@ public class HeapAllocStmt implements IStmt {
 		heap.put(adr, expresion.eval(tbl, heap));
 		tbl.put(varName, adr);
 
-		return state;
+		return null;
 	}
 
 	private static Integer getAdr() {

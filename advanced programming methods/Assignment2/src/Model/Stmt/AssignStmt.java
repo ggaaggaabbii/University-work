@@ -18,7 +18,7 @@ public class AssignStmt implements IStmt {
 		MyIMap<Integer, Integer> heap = state.getHeap();
 		int val = exp.eval(symTable, heap);
 		symTable.put(id, val);
-		return state;
+		return null;
 	}
 
 	public AssignStmt(String id, Exp exp) {

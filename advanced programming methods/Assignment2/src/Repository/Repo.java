@@ -5,6 +5,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.PrgState;
 import Model.ADTs.MyIList;
@@ -18,24 +20,23 @@ import javafx.util.Pair;
 
 public class Repo implements MyIRepo {
 
-	PrgState crtState;
+	IStmt originalProgram;
+	List<PrgState> prgList;
 	String logFilePath;
 
-	@Override
-	public PrgState getCrtProg() {
-		return crtState;
-	}
-
 	public Repo(PrgState state, String logFilePath) {
-		crtState = state;
+		prgList = new ArrayList<PrgState>();
+		prgList.add(state);
+		originalProgram = state.getOriginalProgram();
+
 		this.logFilePath = logFilePath;
 	}
 
 	@Override
-	public void logPrgState() {
+	public void logPrgState(PrgState prg) {
 		try {
 			PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-			logFile.println(crtState);
+			logFile.println(prg);
 			logFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,13 +55,23 @@ public class Repo implements MyIRepo {
 			e.printStackTrace();
 		}
 
-		IStmt originalProgram = crtState.getOriginalProgram();
 		MyIStack<IStmt> stack = new MyStack<IStmt>();
 		MyIList<Integer> output = new MyList<Integer>();
 		MyIMap<String, Integer> symTable = new MyMap<String, Integer>();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = new MyMap<Integer, Pair<String, BufferedReader>>();
 		MyIMap<Integer, Integer> heap = new MyMap<Integer, Integer>();
+		prgList = new ArrayList<PrgState>();
 
-		crtState = new PrgState(stack, symTable, output, fileTable, heap, originalProgram.deepCopy());
+		prgList.add(new PrgState(stack, symTable, output, fileTable, heap, originalProgram.deepCopy()));
+	}
+
+	@Override
+	public List<PrgState> getPrgList() {
+		return prgList;
+	}
+
+	@Override
+	public void setPrgList(List<PrgState> list) {
+		prgList = list;
 	}
 }

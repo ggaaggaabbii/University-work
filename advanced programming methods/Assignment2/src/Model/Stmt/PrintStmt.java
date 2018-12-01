@@ -22,7 +22,7 @@ public class PrintStmt implements IStmt {
 		MyIMap<Integer, Integer> heap = state.getHeap();
 		ot.add(exp.eval(tbl, heap));
 
-		return state;
+		return null;
 	}
 
 	public PrintStmt(Exp exp) {

@@ -1,1 +1,95 @@
 
+Prg state 2:
+ExeStack:
+(a = (2 + (3 * 5)); (b = (a + 1); Print(b)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+a = (2 + (3 * 5))
+(b = (a + 1); Print(b))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+a = (2 + (3 * 5))
+(b = (a + 1); Print(b))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+(b = (a + 1); Print(b))
+SymTable:
+a -> 17
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+(b = (a + 1); Print(b))
+SymTable:
+a -> 17
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+b = (a + 1)
+Print(b)
+SymTable:
+a -> 17
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+b = (a + 1)
+Print(b)
+SymTable:
+a -> 17
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+Print(b)
+SymTable:
+a -> 17
+b -> 18
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+Print(b)
+SymTable:
+a -> 17
+b -> 18
+Out:
+FileTable:
+Heap:
+
+Prg state 2:
+ExeStack:
+SymTable:
+a -> 17
+b -> 18
+Out:
+18
+FileTable:
+Heap:
+

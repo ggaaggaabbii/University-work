@@ -3,7 +3,12 @@ package Controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import Model.PrgState;
@@ -18,6 +23,8 @@ import javafx.util.Pair;
 public class Ctrl {
 	MyIRepo repo;
 	boolean printFlag;
+	ExecutorService executor;
+	MyIMap<Integer, Pair<String, BufferedReader>> fileTable;
 
 	PrgState oneStep(PrgState state) throws MyStmtExecException {
 		MyIStack<IStmt> stack = state.getExeStack();
@@ -29,20 +36,55 @@ public class Ctrl {
 	}
 
 	public void allSteps() throws MyStmtExecException {
+
 		repo.resetPtgState();
-		PrgState prgState = repo.getCrtProg();
-		MyIStack<IStmt> stack = prgState.getExeStack();
-		MyIMap<Integer, Integer> heap = prgState.getHeap();
-		MyIMap<String, Integer> symTable = prgState.getSymTable();
+		executor = Executors.newFixedThreadPool(2);
+		List<PrgState> prgList = removeCompletedPrg(repo.getPrgList());
+		MyIMap<Integer, Integer> heap = prgList.get(0).getHeap();
+		fileTable = repo.getPrgList().get(0).getFileTable();
+		System.out.println(fileTable);
 
-		while (!stack.empty()) {
-			oneStep(prgState);
-			heap.setContent(conservativeGarbageCollector(symTable.getContent().values(), heap));
-
-			if (printFlag) {
-				repo.logPrgState();
-			}
+		while (prgList.size() > 0) {
+			oneStepForAllPrg(prgList);
+			MyIMap<String, Integer> tmpSymTable = new MyMap<String, Integer>();
+			prgList.stream().map(p -> p.getSymTable()).forEach((p) -> {
+				p.getContent().entrySet().stream().forEach((ent) -> {
+					tmpSymTable.put(ent.getKey(), ent.getValue());
+				});
+			});
+			heap.setContent(conservativeGarbageCollector(tmpSymTable.getContent().values(), heap));
+			prgList = removeCompletedPrg(repo.getPrgList());
 		}
+
+		executor.shutdownNow();
+		repo.setPrgList(prgList);
+	}
+
+	public void oneStepForAllPrg(List<PrgState> prgList) {
+		List<Callable<PrgState>> callList = prgList.stream().map((PrgState p) -> (Callable<PrgState>) (() -> {
+			return p.oneStep();
+		})).collect(Collectors.toList());
+
+		List<PrgState> newPrgList = null;
+		try {
+			newPrgList = executor.invokeAll(callList).stream().map(future -> {
+				try {
+					return future.get();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}).filter(p -> p != null).collect(Collectors.toList());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		if (newPrgList != null) {
+			prgList.addAll(newPrgList);
+		}
+
+		prgList.forEach(prg -> repo.logPrgState(prg));
+		repo.setPrgList(prgList);
 	}
 
 	public Ctrl(MyIRepo repo, boolean flag) {
@@ -58,7 +100,7 @@ public class Ctrl {
 
 	public void closeAllFiles() throws MyStmtExecException {
 		System.out.println("Closing remaining files");
-		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = repo.getCrtProg().getFileTable();
+		System.out.println(fileTable);
 
 		fileTable.entrySet().stream().map(e -> e.getValue().getValue()).forEach(e -> {
 			try {
@@ -68,4 +110,9 @@ public class Ctrl {
 			}
 		});
 	}
+
+	public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
+		return inPrgList.stream().filter(p -> p.isNotCompleted()).collect(Collectors.toList());
+	}
+
 }

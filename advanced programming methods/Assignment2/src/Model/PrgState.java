@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import Model.ADTs.MyIList;
 import Model.ADTs.MyIMap;
 import Model.ADTs.MyIStack;
+import Model.Exceptions.MyStmtExecException;
 import Model.Stmt.IStmt;
 import javafx.util.Pair;
 
@@ -15,8 +16,10 @@ public class PrgState {
 	MyIMap<Integer, Pair<String, BufferedReader>> FileTable;
 	MyIMap<Integer, Integer> Heap;
 	IStmt originalProgram;
+	Integer id;
 
 	static Integer fileId = 0;
+	static Integer idCounter = 0;
 
 	public MyIStack<IStmt> getExeStack() {
 		return exeStack;
@@ -75,12 +78,14 @@ public class PrgState {
 		Heap = heap;
 		originalProgram = prg.deepCopy();
 		exeStack.push(prg);
+		id = getNewId();
 	}
 
 	@Override
 	public String toString() {
-		return "Prg state:\nExeStack:\n" + exeStack.toString() + "SymTable:\n" + symTable.toString() + "Out:\n"
-				+ out.toString() + "FileTable:\n" + FileTable.toString() + "Heap:\n" + Heap.toString();
+		return "Prg state " + id.toString() + ":\nExeStack:\n" + exeStack.toString() + "SymTable:\n"
+				+ symTable.toString() + "Out:\n" + out.toString() + "FileTable:\n" + FileTable.toString() + "Heap:\n"
+				+ Heap.toString();
 	}
 
 	public static Integer getFileDescr() {
@@ -88,4 +93,28 @@ public class PrgState {
 		return fileId;
 	}
 
+	public static Integer getNewId() {
+		++idCounter;
+		return idCounter;
+	}
+
+	public boolean isNotCompleted() {
+		return !exeStack.empty();
+	}
+
+	public PrgState oneStep() throws MyStmtExecException {
+		if (exeStack.empty()) {
+			throw new MyStmtExecException("Empty exe stack");
+		}
+		IStmt crtStmt = exeStack.pop();
+		return crtStmt.execute(this);
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
 }

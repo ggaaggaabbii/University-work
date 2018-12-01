@@ -19,6 +19,7 @@ import Model.Expresions.VarExp;
 import Model.Stmt.AssignStmt;
 import Model.Stmt.CloseRFile;
 import Model.Stmt.CompStmt;
+import Model.Stmt.ForkStmt;
 import Model.Stmt.HeapAllocStmt;
 import Model.Stmt.IStmt;
 import Model.Stmt.IfStmt;
@@ -35,7 +36,7 @@ public class App {
 
 	public static void main(String[] args) {
 		boolean debugFlag = true;
-		IStmt[] examples = new IStmt[16];
+		IStmt[] examples = new IStmt[17];
 
 		/*
 		 * v=2;Print(v);Print(5+6)
@@ -179,6 +180,18 @@ public class App {
 						new CompStmt(new PrintStmt(new VarExp("v")),
 								new AssignStmt("v", new ArithExp("-", new VarExp("v"), new ConstExp(1))))),
 				new PrintStmt(new VarExp("v"))));
+		/*
+		 * v=10;new(a,22); fork(wH(a,30);v=32;print(v);print(rH(a)));
+		 * print(v);print(rH(a))
+		 */
+		examples[16] = new CompStmt(new AssignStmt("v", new ConstExp(10)),
+				new CompStmt(new HeapAllocStmt("a", new ConstExp(22)),
+						new CompStmt(
+								new ForkStmt(new CompStmt(new WriteHeapStmt("a", new ConstExp(30)),
+										new CompStmt(new AssignStmt("v", new ConstExp(32)),
+												new CompStmt(new PrintStmt(new VarExp("v")),
+														new PrintStmt(new ReadHeapExp("a")))))),
+								new CompStmt(new PrintStmt(new VarExp("v")), new PrintStmt(new ReadHeapExp("a"))))));
 
 		Ui ui = new Ui();
 		ExitCommand exitCommand = new ExitCommand("0", "Exit");
