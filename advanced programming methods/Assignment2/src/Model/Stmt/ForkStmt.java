@@ -14,7 +14,7 @@ public class ForkStmt implements IStmt {
 		PrgState childProcess = new PrgState(new MyStack<IStmt>(),
 				new MyMap<String, Integer>(state.getSymTable().getContent()), state.getOut(), state.getFileTable(),
 				state.getHeap(), forkBody);
-		childProcess.setId(state.getId() * 10);
+		childProcess.setId(PrgState.getNewId());
 		return childProcess;
 	}
 
