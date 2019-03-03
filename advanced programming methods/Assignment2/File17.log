@@ -200,3 +200,76 @@ FileTable:
 Heap:
 1 -> 30
 
+Prg state 17:
+ExeStack:
+v = 10
+(new(a, 22); (fork((wH(a, 30); (v = 32; (Print(v); Print(rH(a)))))); (Print(v); Print(rH(a)))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 17:
+ExeStack:
+(new(a, 22); (fork((wH(a, 30); (v = 32; (Print(v); Print(rH(a)))))); (Print(v); Print(rH(a)))))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state 17:
+ExeStack:
+new(a, 22)
+(fork((wH(a, 30); (v = 32; (Print(v); Print(rH(a)))))); (Print(v); Print(rH(a))))
+SymTable:
+v -> 10
+Out:
+FileTable:
+Heap:
+
+Prg state 17:
+ExeStack:
+(fork((wH(a, 30); (v = 32; (Print(v); Print(rH(a)))))); (Print(v); Print(rH(a))))
+SymTable:
+a -> 1
+v -> 10
+Out:
+FileTable:
+Heap:
+1 -> 22
+
+Prg state 17:
+ExeStack:
+fork((wH(a, 30); (v = 32; (Print(v); Print(rH(a))))))
+(Print(v); Print(rH(a)))
+SymTable:
+a -> 1
+v -> 10
+Out:
+FileTable:
+Heap:
+1 -> 22
+
+Prg state 17:
+ExeStack:
+(Print(v); Print(rH(a)))
+SymTable:
+a -> 1
+v -> 10
+Out:
+FileTable:
+Heap:
+1 -> 22
+
+Prg state 20:
+ExeStack:
+(wH(a, 30); (v = 32; (Print(v); Print(rH(a)))))
+SymTable:
+a -> 1
+v -> 10
+Out:
+FileTable:
+Heap:
+1 -> 22
+

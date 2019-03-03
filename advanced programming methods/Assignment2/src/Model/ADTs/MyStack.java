@@ -43,4 +43,9 @@ public class MyStack<E> implements MyIStack<E> {
 		}
 		return result;
 	}
+
+	@Override
+	public Stack<E> getInternalStack() {
+		return stack;
+	}
 }

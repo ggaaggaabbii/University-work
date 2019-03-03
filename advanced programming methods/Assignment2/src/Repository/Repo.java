@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import Model.PrgState;
 import Model.ADTs.MyIList;
@@ -60,9 +61,12 @@ public class Repo implements MyIRepo {
 		MyIMap<String, Integer> symTable = new MyMap<String, Integer>();
 		MyIMap<Integer, Pair<String, BufferedReader>> fileTable = new MyMap<Integer, Pair<String, BufferedReader>>();
 		MyIMap<Integer, Integer> heap = new MyMap<Integer, Integer>();
+		MyIMap<Integer, Pair<Integer, List<Integer>>> barrTbl = new MyMap<Integer, Pair<Integer, List<Integer>>>();
+		ReentrantReadWriteLock barrSync = new ReentrantReadWriteLock();
 		prgList = new ArrayList<PrgState>();
 
-		prgList.add(new PrgState(stack, symTable, output, fileTable, heap, originalProgram.deepCopy()));
+		prgList.add(
+				new PrgState(stack, symTable, output, fileTable, heap, barrTbl, originalProgram.deepCopy(), barrSync));
 	}
 
 	@Override

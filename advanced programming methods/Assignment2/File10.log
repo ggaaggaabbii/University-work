@@ -7,3 +7,61 @@ Out:
 FileTable:
 Heap:
 
+Prg state 10:
+ExeStack:
+readFile(var_f, var_c)
+(Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+(Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+Print(var_c)
+(IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+(IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0))
+closeRFile(var_f)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+closeRFile(var_f)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 10:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+

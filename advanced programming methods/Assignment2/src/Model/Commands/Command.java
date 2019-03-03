@@ -1,5 +1,7 @@
 package Model.Commands;
 
+import Controller.Ctrl;
+
 public abstract class Command {
 	private String key, description;
 
@@ -17,4 +19,7 @@ public abstract class Command {
 	public String getDescription() {
 		return description;
 	}
+
+	public abstract Ctrl getCtrl();
+
 }

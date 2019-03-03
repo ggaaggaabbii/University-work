@@ -1,0 +1,226 @@
+Prg state 19:
+ExeStack:
+fork(fork(Print(10)))
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 21:
+ExeStack:
+fork(Print(10))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 21:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 23:
+ExeStack:
+Print(11)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 24:
+ExeStack:
+Print(10)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 23:
+ExeStack:
+SymTable:
+Out:
+11
+FileTable:
+Heap:
+
+Prg state 24:
+ExeStack:
+SymTable:
+Out:
+11
+FileTable:
+Heap:
+
+Prg state 18:
+ExeStack:
+fork(fork(Print(10)))
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 18:
+ExeStack:
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 20:
+ExeStack:
+fork(Print(10))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 18:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 20:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 22:
+ExeStack:
+Print(11)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 24:
+ExeStack:
+Print(10)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 22:
+ExeStack:
+SymTable:
+Out:
+11
+10
+FileTable:
+Heap:
+
+Prg state 24:
+ExeStack:
+SymTable:
+Out:
+11
+10
+FileTable:
+Heap:
+
+Prg state 18:
+ExeStack:
+fork(fork(Print(10)))
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 18:
+ExeStack:
+fork(Print(11))
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 22:
+ExeStack:
+fork(Print(10))
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 18:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 22:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 24:
+ExeStack:
+Print(11)
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 26:
+ExeStack:
+Print(10)
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 24:
+ExeStack:
+SymTable:
+Out:
+11
+10
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 26:
+ExeStack:
+SymTable:
+Out:
+11
+10
+FileTable:
+Heap:
+BarrierTable:
+

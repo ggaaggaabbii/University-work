@@ -1,6 +1,8 @@
 package Model;
 
 import java.io.BufferedReader;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import Model.ADTs.MyIList;
 import Model.ADTs.MyIMap;
@@ -15,11 +17,14 @@ public class PrgState {
 	MyIMap<String, Integer> symTable;
 	MyIMap<Integer, Pair<String, BufferedReader>> FileTable;
 	MyIMap<Integer, Integer> Heap;
+	MyIMap<Integer, Pair<Integer, List<Integer>>> BarrierTable;
 	IStmt originalProgram;
+	ReentrantReadWriteLock barrSync;
 	Integer id;
 
 	static Integer fileId = 0;
 	static Integer idCounter = 0;
+	static Integer barrierCounter = 0;
 
 	public MyIStack<IStmt> getExeStack() {
 		return exeStack;
@@ -53,6 +58,10 @@ public class PrgState {
 		this.originalProgram = originalProgram;
 	}
 
+	public ReentrantReadWriteLock getBarrSync() {
+		return barrSync;
+	}
+
 	public MyIMap<Integer, Pair<String, BufferedReader>> getFileTable() {
 		return FileTable;
 	}
@@ -69,8 +78,17 @@ public class PrgState {
 		return Heap;
 	}
 
+	public MyIMap<Integer, Pair<Integer, List<Integer>>> getBarrierTable() {
+		return BarrierTable;
+	}
+
+	public void setBarrierTable(MyIMap<Integer, Pair<Integer, List<Integer>>> barrierTable) {
+		BarrierTable = barrierTable;
+	}
+
 	public PrgState(MyIStack<IStmt> stk, MyIMap<String, Integer> symtbl, MyIList<Integer> ot,
-			MyIMap<Integer, Pair<String, BufferedReader>> ft, MyIMap<Integer, Integer> heap, IStmt prg) {
+			MyIMap<Integer, Pair<String, BufferedReader>> ft, MyIMap<Integer, Integer> heap,
+			MyIMap<Integer, Pair<Integer, List<Integer>>> barrTbl, IStmt prg, ReentrantReadWriteLock barrSync) {
 		exeStack = stk;
 		symTable = symtbl;
 		out = ot;
@@ -78,14 +96,16 @@ public class PrgState {
 		Heap = heap;
 		originalProgram = prg.deepCopy();
 		exeStack.push(prg);
+		BarrierTable = barrTbl;
 		id = getNewId();
+		this.barrSync = barrSync;
 	}
 
 	@Override
 	public String toString() {
 		return "Prg state " + id.toString() + ":\nExeStack:\n" + exeStack.toString() + "SymTable:\n"
 				+ symTable.toString() + "Out:\n" + out.toString() + "FileTable:\n" + FileTable.toString() + "Heap:\n"
-				+ Heap.toString();
+				+ Heap.toString() + "BarrierTable:\n" + BarrierTable.toString();
 	}
 
 	public static Integer getFileDescr() {
@@ -96,6 +116,11 @@ public class PrgState {
 	public static Integer getNewId() {
 		++idCounter;
 		return idCounter;
+	}
+
+	public static Integer getNewBarrId() {
+		++barrierCounter;
+		return barrierCounter;
 	}
 
 	public boolean isNotCompleted() {

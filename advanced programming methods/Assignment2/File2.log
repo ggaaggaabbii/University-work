@@ -93,3 +93,12 @@ Out:
 FileTable:
 Heap:
 
+Prg state 2:
+ExeStack:
+a = (2 + (3 * 5))
+(b = (a + 1); Print(b))
+SymTable:
+Out:
+FileTable:
+Heap:
+

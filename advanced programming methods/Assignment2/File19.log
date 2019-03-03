@@ -1,0 +1,483 @@
+Prg state 19:
+ExeStack:
+a = 1
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10))))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+b = 2
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10)))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10)))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+c = 5
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(10))
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300))
+Print(10)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+IF(((a * 10) == (b * c))) THEN((Print(a); Print(b)))ELSE(IF(((a * 10) == 10)) THEN((Print(100); Print(200)))ELSE(Print(300)))
+Print(10)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(a)
+Print(b)
+Print(10)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(b)
+Print(10)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(10)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+10
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+a = 1
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+b = 2
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300)))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300)))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+c = 5
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300))
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+IF(((a * 10) == (b * c))) THEN((Print(a); Print(b)))ELSE(IF(((a * 10) == 10)) THEN((Print(100); Print(200)))ELSE(Print(300)))
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(a)
+Print(b)
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(b)
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+300
+FileTable:
+Heap:
+
+Prg state 19:
+ExeStack:
+a = 1
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))))
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+(b = 2; (c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+b = 2
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300)))
+SymTable:
+a -> 1
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+(c = 5; (switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300)))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+c = 5
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))
+SymTable:
+a -> 1
+b -> 2
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+(switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300)); Print(300))
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+switch((a * 10))
+(case ((b * c)) (Print(a); Print(b)))
+(case (10) (Print(100); Print(200)))
+(default Print(300))
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+IF(((a * 10) == (b * c))) THEN((Print(a); Print(b)))ELSE(IF(((a * 10) == 10)) THEN((Print(100); Print(200)))ELSE(Print(300)))
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+Print(a)
+Print(b)
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+Print(b)
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+Print(300)
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 19:
+ExeStack:
+SymTable:
+a -> 1
+b -> 2
+c -> 5
+Out:
+1
+2
+300
+FileTable:
+Heap:
+BarrierTable:
+

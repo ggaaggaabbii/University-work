@@ -27,6 +27,7 @@ public class Ctrl {
 	MyIMap<Integer, Pair<String, BufferedReader>> fileTable;
 
 	PrgState oneStep(PrgState state) throws MyStmtExecException {
+
 		MyIStack<IStmt> stack = state.getExeStack();
 		if (stack.empty()) {
 			throw new MyStmtExecException("Finished program");
@@ -38,7 +39,6 @@ public class Ctrl {
 	public void allSteps() throws MyStmtExecException {
 
 		repo.resetPtgState();
-		executor = Executors.newFixedThreadPool(2);
 		List<PrgState> prgList = removeCompletedPrg(repo.getPrgList());
 		MyIMap<Integer, Integer> heap = prgList.get(0).getHeap();
 		fileTable = repo.getPrgList().get(0).getFileTable();
@@ -62,7 +62,12 @@ public class Ctrl {
 
 	public void oneStepForAllPrg(List<PrgState> prgList) {
 		List<Callable<PrgState>> callList = prgList.stream().map((PrgState p) -> (Callable<PrgState>) (() -> {
-			return p.oneStep();
+			try {
+				return p.oneStep();
+			} catch (MyStmtExecException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
 		})).collect(Collectors.toList());
 
 		List<PrgState> newPrgList = null;
@@ -90,9 +95,10 @@ public class Ctrl {
 	public Ctrl(MyIRepo repo, boolean flag) {
 		this.repo = repo;
 		printFlag = flag;
+		executor = Executors.newFixedThreadPool(2);
 	}
 
-	private MyIMap<Integer, Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
+	public MyIMap<Integer, Integer> conservativeGarbageCollector(Collection<Integer> symTableValues,
 			MyIMap<Integer, Integer> heap) {
 		return new MyMap<Integer, Integer>(heap.entrySet().stream().filter(e -> symTableValues.contains(e.getKey()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
@@ -113,6 +119,10 @@ public class Ctrl {
 
 	public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
 		return inPrgList.stream().filter(p -> p.isNotCompleted()).collect(Collectors.toList());
+	}
+
+	public MyIRepo getRepo() {
+		return repo;
 	}
 
 }

@@ -29,4 +29,8 @@ public class RunCommand extends Command {
 		}
 	}
 
+	public Ctrl getCtrl() {
+		return ctrl;
+	}
+
 }

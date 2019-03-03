@@ -1,5 +1,7 @@
 package Model.ADTs;
 
+import java.util.Stack;
+
 public interface MyIStack<E> {
 	boolean empty();
 
@@ -10,4 +12,7 @@ public interface MyIStack<E> {
 	E push(E item);
 
 	int search(Object o);
+
+	Stack<E> getInternalStack();
+
 }

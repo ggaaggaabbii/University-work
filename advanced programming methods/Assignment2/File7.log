@@ -6,3 +6,78 @@ SymTable:
 Out:
 FileTable:
 
+Prg state 7:
+ExeStack:
+openRFile(var_f, "test1.in")
+(readFile(var_f, var_c); (Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+(readFile(var_f, var_c); (Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+readFile(var_f, var_c)
+(Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+(Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f)))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+Print(var_c)
+(IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+(IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0))
+closeRFile(var_f)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+closeRFile(var_f)
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 7:
+ExeStack:
+SymTable:
+Out:
+FileTable:
+Heap:
+

@@ -13,7 +13,7 @@ public class ForkStmt implements IStmt {
 	public PrgState execute(PrgState state) throws MyStmtExecException {
 		PrgState childProcess = new PrgState(new MyStack<IStmt>(),
 				new MyMap<String, Integer>(state.getSymTable().getContent()), state.getOut(), state.getFileTable(),
-				state.getHeap(), forkBody);
+				state.getHeap(), state.getBarrierTable(), forkBody, state.getBarrSync());
 		childProcess.setId(PrgState.getNewId());
 		return childProcess;
 	}

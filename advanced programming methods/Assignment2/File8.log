@@ -28,3 +28,24 @@ FileTable:
 1 -> test.in=java.io.BufferedReader@4f3f5b24
 Heap:
 
+Prg state 8:
+ExeStack:
+openRFile(var_f, "test.in")
+(readFile((var_f + 2), var_c); (Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))))
+SymTable:
+Out:
+FileTable:
+Heap:
+BarrierTable:
+
+Prg state 8:
+ExeStack:
+(readFile((var_f + 2), var_c); (Print(var_c); (IF(var_c) THEN((readFile(var_f, var_c); Print(var_c)))ELSE(Print(0)); closeRFile(var_f))))
+SymTable:
+var_f -> 1
+Out:
+FileTable:
+1 -> test.in=java.io.BufferedReader@419128fd
+Heap:
+BarrierTable:
+

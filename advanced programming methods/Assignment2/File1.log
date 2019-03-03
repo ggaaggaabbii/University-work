@@ -1,39 +1,400 @@
-Prg state:
+Prg state 19:
 ExeStack:
 (v = 2; Print(v))
 Print((5 + 6))
 SymTable:
 Out:
+FileTable:
+Heap:
 
-Prg state:
+Prg state 19:
 ExeStack:
 v = 2
 Print(v)
 Print((5 + 6))
 SymTable:
 Out:
+FileTable:
+Heap:
 
-Prg state:
+Prg state 19:
 ExeStack:
 Print(v)
 Print((5 + 6))
 SymTable:
 v -> 2
 Out:
+FileTable:
+Heap:
 
-Prg state:
+Prg state 19:
 ExeStack:
 Print((5 + 6))
 SymTable:
 v -> 2
 Out:
 2
+FileTable:
+Heap:
 
-Prg state:
+Prg state 19:
 ExeStack:
 SymTable:
 v -> 2
 Out:
 2
 11
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+SymTable:
+v -> 2
+Out:
+2
+11
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+SymTable:
+v -> 2
+Out:
+2
+11
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+SymTable:
+v -> 2
+Out:
+2
+11
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+2
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+SymTable:
+v -> 2
+Out:
+2
+11
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+(v = 2; Print(v))
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+v = 2
+Print(v)
+Print((5 + 6))
+SymTable:
+Out:
+FileTable:
+Heap:
+
+Prg state 1:
+ExeStack:
+Print(v)
+Print((5 + 6))
+SymTable:
+v -> 2
+Out:
+FileTable:
+Heap:
 
