@@ -42,6 +42,7 @@ IF OBJECT_ID('City', 'U') IS NOT NULL
 
 CREATE TABLE City(
 	cid INT PRIMARY KEY IDENTITY(1, 1),
+	name CHAR(30),
 	latitude FLOAT,
 	longitude FLOAT
 )
@@ -127,7 +128,8 @@ CREATE TABLE Serves(
 CREATE TABLE Ingredient(
 	iid INT PRIMARY KEY IDENTITY(1, 1),
 	price INT,
-	taste VARCHAR(30)
+	taste VARCHAR(30),
+	name CHAR(30)
 )
 
 CREATE TABLE Containing(
@@ -136,3 +138,20 @@ CREATE TABLE Containing(
 	PRIMARY KEY(iid, rid)
 )
 
+IF OBJECT_ID (N'dbo.ufnGetNumberOfEmployees', N'FN') IS NOT NULL  
+    DROP FUNCTION ufnGetNumberOfEmployees;  
+GO  
+CREATE FUNCTION dbo.ufnGetNumberOfEmployees(@HotelID int)  
+RETURNS int   
+AS   
+-- Returns number of employees in a hotel  
+BEGIN  
+    DECLARE @ret int;  
+    SELECT @ret = SUM(H.Count)   
+    FROM (SELECT COUNT(*) AS Count
+		  FROM Employs E
+		  WHERE E.hid = @HotelID) AS H
+     IF (@ret IS NULL)   
+        SET @ret = 0;  
+    RETURN @ret;  
+END;
