@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Lab2</title>
+  <link href='https://fonts.googleapis.com/css?family=Caesar+Dressing' rel='stylesheet' type='text/css'>
+  <style>
+    body {
+      font-family: Times New Roman;
+      background-color: black;
+    }
+
+    .glow {
+      font-size: 35px;
+      color: #fff;
+      -webkit-animation: glow 1s ease-in-out infinite alternate;
+      text-align: center;
+    }
+
+    @-webkit-keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+      }
+
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+      }
+    }
+
+    span {
+      color: #000;
+      font-family: 'Caesar Dressing', cursive;
+      font-size: 5em;
+      text-transform: lowercase;
+      vertical-align: middle;
+      letter-spacing: .2em;
+    }
+
+    .fire {
+      -webkit-animation: animation 1s ease-in-out infinite alternate;
+      text-align: center;
+    }
+
+    .burn {
+      -webkit-animation: animation .65s ease-in-out infinite alternate;
+      text-align: center;
+    }
+
+    @-webkit-keyframes animation {
+      0% {
+        text-shadow: 0 0 20px #fefcc9,
+          10px -10px 30px #feec85,
+          -20px -20px 40px #ffae34,
+          20px -40px 50px #ec760c,
+          -20px -60px 60px #cd4606,
+          0 -80px 70px #973716,
+          10px -90px 80px #451b0e;
+      }
+
+      100% {
+        text-shadow: 0 0 20px #fefcc9,
+          10px -10px 30px #fefcc9,
+          -20px -20px 40px #feec85,
+          22px -42px 60px #ffae34,
+          -22px -58px 50px #ec760c,
+          0 -82px 80px #cd4606,
+          10px -90px 80px #973716;
+      }
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    * {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #container ul {
+      list-style: none
+    }
+
+    #container ul li {
+      background-color: #98FB98;
+      width: 150px;
+      border: 1px solid purple;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      font-size: 18px;
+      position: relative;
+    }
+
+    #container ul li:hover {
+      background-color: #98DF98
+    }
+
+    #container ul ul {
+      display: none;
+    }
+
+    #container ul li:hover>ul {
+      display: block;
+    }
+
+    #container ul ul {
+      margin-left: 150px;
+      top: 0px;
+      position: absolute;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="container">
+    <ul>
+      <li>Home</li>
+      <li>Memes
+        <ul>
+          <li>Alex Jones
+            <ul>
+              <li>New
+                <ul>
+                  <li>Gay Frogs</li>
+                  <li>Gun control</li>
+                  <li>Hillary Clinton</li>
+                </ul>
+              </li>
+              <li>Trending</li>
+              <li>Most Rated</li>
+            </ul>
+          </li>
+          <li>Clanul Mafiei
+            <ul>
+              <li>Iuli Chifu</li>
+              <li>Purice</li>
+              <li>Accepto admine</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Contact
+        <ul>
+          <li>SMS</li>
+          <li>Mail</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <h1 class="glow">Glow</h1>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <h1 class="centered"><span class="fire">F</span><span class="burn">i</span><span class="burn">r</span><span class="fire">e</span></h1>
+</body>
+
+</html>

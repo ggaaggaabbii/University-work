@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+  <select name="opt1" id="countySel" size="1">
+    <option value="" selected="selected"></option>
+  </select>
+  <br>
+  <br>
+  <select name="opt2" id="citySel" size="1">
+    <option value="" selected="selected">Please select county first</option>
+  </select>
+
+  <div id="dialog-form" title="Add text">
+
+    <form>
+      <fieldset>
+        <input type="text" name="input1" id="input1" class="text ui-widget-content ui-corner-all">
+        <input type="text" name="input2" id="input2" class="text ui-widget-content ui-corner-all">
+        <input type="text" name="input3" id="input3" class="text ui-widget-content ui-corner-all">
+
+        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      </fieldset>
+    </form>
+  </div>
+
+
+  <div id="users-contain" class="ui-widget">
+    <p id="concatenated-text"></p>
+    <input></input>
+    <input></input>
+    <input></input>
+    <input></input>
+    <input></input>
+  </div>
+  <button id="button">button</button>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="myscript.js"></script>
+</body>
+
+
+</html>
