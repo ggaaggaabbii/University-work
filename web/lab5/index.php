@@ -12,15 +12,15 @@
 					alert ("Your browser does not support XMLHTTP!");
 					return;
 				}
-				var url="showTable.php";
+				var url="showTable.php?type=" + document.getElementById("type").value;
 				//url=url+"?q="+str;
 				//url=url+"&sid="+Math.random();
 				xmlhttp.onreadystatechange=stateChanged;
 				xmlhttp.open("GET",url,true);
-				xmlhttp.send(null);
+				xmlhttp.send();
 			}
 			function stateChanged() {
-				if (xmlhttp.readyState==4) {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 				      document.getElementById("maindiv").innerHTML=xmlhttp.responseText;
 				}
 			}
@@ -32,9 +32,13 @@
 			}
 		</script>
   <body>
-<input id="type" type="text" name="type"></input>
-<input type="button" name="recipes" value="Get recipes" onclick="getRecipes()"></input>
-<div id="maindiv"></div>
+    <div>
+      <a href="/update.php">update</a>
+      <a href="/delete.php">delete</a>
+      <a href="/insert.php">insert</a>
+    </div>
+    <input id="type" type="text" name="type" onkeyup="getRecipes()"></input>
+    <div id="maindiv"></div>
 
   </body>
 </html>

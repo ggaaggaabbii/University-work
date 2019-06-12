@@ -9,6 +9,7 @@ class DBUtils {
 
 	private $pdo;
 	private $error;
+	private $deleteStmt;
 
 	public function __construct () {
 		$dsn = "mysql:host=$this->host;port=$this->port;dbname=$this->db;charset=$this->charset";
@@ -29,19 +30,49 @@ class DBUtils {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public function filter($name) {
+		$stmt = $this->pdo->query("SELECT * FROM recipe WHERE name='$name'");
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	public function insert($author, $name, $type, $recipe) {
-		$affected_rows = $this->pdo->exec("INSERT into recipe values('" . $author . "','" . $name ."', " . $type . ", '" . $recipe . "');");
-		return $affected_rows;
+		try {
+			$stmt = $this->pdo->prepare("INSERT INTO recipe VALUES(:author, :name, :type, :recipe);");
+    	$stmt->bindParam(':author', $author);
+			$stmt->bindParam(':name', $name);
+			$stmt->bindParam(':type', $type);
+			$stmt->bindParam(':recipe', $recipe);
+			$stmt->execute();
+			return "ok";
+		}catch(PDOException $e){
+			return "error...";
+	  }
 	}
 
 	public function delete ($name) {
-		$affected_rows = $this->pdo->exec("DELETE from recipe where name=" . $name);
-		return $affected_rows;
+		try {
+			$stmt = $this->pdo->prepare("DELETE FROM recipe WHERE name=:name");
+    	$stmt->bindParam(':name', $name);
+			$stmt->execute();
+			return "ok";
+		}catch(PDOException $e){
+			return "error...";
+	  }
 	}
 
-	public function update ($name, $author, $type, $recipe) {
-		$affected_rows = $this->pdo->exec("UPDATE recipe SET author='" . $author ."' where id=" . $id);
-
+	public function update ($id, $author, $name, $type, $recipe) {
+		try {
+			$stmt = $this->pdo->prepare("UPDATE recipe SET author=:author, name=:name, type=:type, recipe=:recipe WHERE name=:id");
+			$stmt->bindParam(':author', $author);
+			$stmt->bindParam(':name', $name);
+			$stmt->bindParam(':type', $type);
+			$stmt->bindParam(':recipe', $recipe);
+			$stmt->bindParam(':id', $id);
+			$stmt->execute();
+			return "ok";
+		}catch(PDOException $e){
+			return "error...";
+		}
 	}
 }
 
