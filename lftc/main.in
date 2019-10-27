@@ -1,0 +1,14 @@
+Struct {
+	int a;
+	int b;
+} pair;
+
+cin >> pair->a;
+cin >> pair->b;
+
+cout << pair->a + pair->b;
+
+counter = a + 1
+counter = "aaa"
+counter = 'a'
+aa = a
