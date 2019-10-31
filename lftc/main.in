@@ -10,5 +10,6 @@ cout << pair->a + pair->b;
 
 counter = a + 1
 counter = "aaa"
+
 counter = 'a'
 aa = a
