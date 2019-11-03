@@ -22,28 +22,84 @@ parser.add_argument("-g",
 parser.add_argument("-k",
 	metavar="--Key",
 	type=str,
-	help="The decryption/encryption key (Should be specified as a=value1;b=value2;c=value3;...;z=value26;space=value27)"
+	help="The decryption/encryption key (Should be specified as value1;value2;value3;...;value n. The given key should be a valid permutation)"
 	)
 
+def is_valid_permutation(A):
+	return min(A) == 1 and max(A) == len(A) == len(set(A))
+
 def generate_key():
+	length = random.randint(3, 10)
+	numbers = [(x + 1) for x in range(length)]
+	random.shuffle(numbers)
 	s = ""
-	v = [x for x in range(0, len(alphabet))]
-	random.shuffle(v)
-	for i in range(0, len(alphabet)):
-		s += alphabet[i] + "=" + str(v[i]) + ";"
+	for i in numbers:
+		s += str(i) + ";"
+	return s[:len(s) - 1]
 
-	return s[:len(s) - 1].replace(" ", "space")
+def validate_input(text, action, key):
+	for x in text:
+		if x not in alphabet:
+			print("Invalid text")
+			return False
 
-
-def validate_key(key):
-	print(key)
-	v = key.split(';')
-	if len(v) != len(alphabet):
+	allowed_actions = ['encrypt', 'decrypt']
+	if action not in allowed_actions:
+		print("Unkown action")
 		return False
-	for i in range(0, len(alphabet)):
-		
-	return True
 
+	numbers = key.split(";")
+	for i in range(len(numbers)):
+		try:
+			numbers[i] = int(numbers[i])
+		except:
+			print("Invalid key")
+			return False
+	return is_valid_permutation(numbers)
+
+def parse_key(key):
+	numbers = key.split(";")
+	for i in range(len(numbers)):
+		numbers[i] = int(numbers[i])
+	return numbers
+
+def inverse_permutation(key):
+	newKey = [0 for x in range(len(key))]
+	for i in range(len(key)):
+		newKey[key[i] - 1] = i + 1
+	return newKey
+
+def encrypt(text, key):
+	newKey = parse_key(key)
+	tmpText = text
+	resultText = ""
+
+	# add empty spaces to the end of the text to get a length multiple of the key length
+	while (len(tmpText) // len(newKey) * len(newKey) != len(tmpText)):
+		tmpText += " "
+
+	# for each block, shuffle the elements acording to the key
+	for i in range(len(tmpText) // len(newKey)):
+		for j in range(len(newKey)):
+			resultText += tmpText[i * len(newKey) + newKey[j] - 1]
+
+	return resultText
+
+def decrypt(text, key):
+	newKey = inverse_permutation(parse_key(key))
+	tmpText = text
+	resultText = ""
+
+	# add empty spaces to the end of the text to get a length multiple of the key length
+	while (len(tmpText) // len(newKey) * len(newKey) != len(tmpText)):
+		tmpText += " "
+
+	# for each block, shuffle the elements acording to the key
+	for i in range(len(tmpText) // len(newKey)):
+		for j in range(len(newKey)):
+			resultText += tmpText[i * len(newKey) + newKey[j] - 1]
+
+	return resultText
 
 def print_output(args):
 	if args.g:
@@ -58,10 +114,17 @@ def print_output(args):
 	if None == args.k:
 		print("Missing mandatory parameter key")
 		return
-	if not validate_key(args.k):
-		print("Invalid key")
+	if not validate_input(args.t, args.a, args.k):
 		return
-	 
+
+	if args.a == "encrypt":
+		print(encrypt(args.t, args.k))
+		return
+	if args.a == "decrypt":
+		print(decrypt(args.t, args.k))
+		return
+
+	return "Something went wrong"
 
 if __name__ == '__main__':
 	args = parser.parse_args()
