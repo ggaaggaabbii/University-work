@@ -17,7 +17,7 @@ parser.add_argument("-a",
 	)
 parser.add_argument("-g",
 	action='store_true',
-	help="Generate a new key",
+	help="Generate a new key. If this parameter is present no other parameter is taken into acount",
 	)
 parser.add_argument("-k",
 	metavar="--Key",
@@ -40,8 +40,8 @@ def validate_key(key):
 	v = key.split(';')
 	if len(v) != len(alphabet):
 		return False
-	#for i in range(0, len(alphabet)):
-
+	for i in range(0, len(alphabet)):
+		
 	return True
 
 
