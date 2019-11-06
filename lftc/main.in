@@ -8,6 +8,10 @@ cin >> pair->b;
 
 cout << pair->a + pair->b;
 
+for (int i = 0; i < n; i = i + 1) {
+	cout << 1;
+}
+
 counter = a + 1
 counter = "aaa"
 
