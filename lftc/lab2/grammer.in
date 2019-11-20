@@ -1,0 +1,19 @@
+{
+	"Terminals" : ["a", "b", "Ɛ"],
+	"Non terminals" : ["S", "A", "B"],
+	"Productions" : {
+		"A" : [
+			["a"],
+			["b", "B"]
+		],
+		"S" : [
+			["a", "A"],
+			["b", "B"],
+			["Ɛ"]
+		],
+		"B" : [
+			["b"]
+		]
+	},
+	"Starting symbol" : "S"
+}
