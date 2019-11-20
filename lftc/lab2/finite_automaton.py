@@ -31,7 +31,34 @@ class FiniteAutomaton():
 		s += "Terminals: ["
 		for t in self.alphabet:
 			s += t + ", "
+		
+		if self.initial_state in self.final_states:
+			s += "Ɛ, "
 		s = s[:len(s) - 2]
 		s += "]\n"
+		s += "Non Terminals: ["
+		for t in self.states:
+			s += t + ", "
+		s = s[:len(s) - 2]
+		s += "]\n"
+		s += "Starting symbol: "
+		s += self.initial_state
+		s += "\n"
+		s += "P:\n"
+		for t in self.transitions.keys():
+			s += t + " -> "
+			if t == self.initial_state and t in self.final_states:
+				s += "Ɛ | "
+			for tran in self.transitions[t]:
+				if tran["state"] in self.final_states:
+					s += tran["symbol"]
+					if tran["state"] in self.transitions.keys():
+						s += " | " + tran["symbol"] + tran["state"]
+				else:
+					s += tran["symbol"] + tran["state"]
+				
+				s += " | "
+			s = s[:len(s) - 2]
+			s += "\n"
 
 		return s

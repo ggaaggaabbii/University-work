@@ -42,7 +42,6 @@ class Grammer(object):
 				if len(prod) > 2:
 					return False
 				if len(prod) == 1 and prod[0] not in self.terminals:
-					print("aici")
 					return False
 				if len(prod) == 2:
 					if prod[0] not in self.terminals:
@@ -54,4 +53,36 @@ class Grammer(object):
 		return True
 
 	def convert(self):
-		return "Not implemented yet"	
+		s = ""
+		s += "States: ["
+		for st in self.non_terminals:
+			s += st
+			s += ", "
+		s += "final_state"
+		s += "]\n"
+		s += "Alphabet: ["
+		for al in self.terminals:
+			s += al
+			s += ", "
+		s = s[:len(s) - 2]
+		s += "]\n"
+		s += "Initial state: " + self.start_symbol + "\n"
+		s += "Final states: ["
+		if "Ɛ" in self.terminals:
+			s += self.start_symbol + ", "
+		s += "final_state]\n"
+		s += "Transitions:\n"
+
+		for non_terminal in self.productions.keys():
+			s += non_terminal + " -> "
+			for prod in self.productions[non_terminal]:
+				if len(prod) == 2:
+					s += "(" + prod[1] + ", " + prod[0] + "), "
+				else:
+					if prod[0] == "Ɛ":
+						continue
+					s += "(final_state, " + prod[0] + "), "
+			s = s[:len(s) - 2]
+			s += "\n"
+
+		return s	
