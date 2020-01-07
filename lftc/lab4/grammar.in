@@ -1,0 +1,16 @@
+{
+	"Terminals" : ["+", "(", ")", "id", "const"],
+	"Non terminals" : ["E", "T"],
+	"Productions" : {
+		"E" : [
+			["T"],
+			["E", "+", "T"]
+		],
+		"T" : [
+			["(", "E", ")"],
+			["id"],
+			["const"]
+		]
+	},
+	"Starting symbol" : "E"
+}
