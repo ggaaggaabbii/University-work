@@ -186,9 +186,6 @@ def shift_sj(state, parse_table):
 	return parse_table[next_s(state)][next_in_seq(state)][1]
 
 def is_shift(state, parse_table):
-	print(next_s(state))
-	print(next_in_seq(state))
-	print(parse_table[next_s(state)][next_in_seq(state)])
 	return parse_table[next_s(state)][next_in_seq(state)][0] == SHIFT
 
 def is_acc(state, parse_table):
@@ -205,14 +202,18 @@ def next_token_in_ws(state):
 
 def parse_grammar(grammar, w):
 	C = can_col(grammar)
+	"""
 	print(C)
 	print("====================")
+	"""
 	parse_table = construct_table(C, grammar)
+	"""
 	for x in parse_table.keys():
 		print(x)
 		print("Content:")
 		print(parse_table[x])
 		print("---")
+	"""
 
 	state = [[convert_state_to_tuple(C[0])], w + [grammar.start_symbol], []]
 	is_accepted = False
@@ -243,14 +244,16 @@ def parse_grammar(grammar, w):
 				state[0].append(A)
 				state[0].append(sj)
 			else:
-				print(state)
-				print(parse_table[next_s(state)][next_in_seq(state)])
+				#print(state)
+				#print(parse_table[next_s(state)][next_in_seq(state)])
 				raise "Error"
 		except Exception:
-			traceback.print_exc()
+			#traceback.print_exc()
 			break
 	print(is_accepted)
-	print(state)
+	#print(state)
+	if is_accepted:
+		print(state[2])
 	pass
 
 if __name__ == "__main__":
@@ -258,4 +261,6 @@ if __name__ == "__main__":
 		g = Grammar(json.load(f))
 		g.enchant()
 		print(g)
-		parse_grammar(g, ["id", "+", "(", "id", "+", "const", ")"])
+		w = ["id", "+", "(", "id", "+", "const", ")"]
+		print(w)
+		parse_grammar(g, w)
