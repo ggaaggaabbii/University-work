@@ -5,7 +5,7 @@ white_spaces = [' ', '\n', '\t', '']
 reserved_words = ['for', 'while', 'if', 'else', 'int', 'char', 'string', 'Struct', 'cin', 'cout']
 operators = ['+', '-', '*', '/', '=', '<', '<=', '==', '>=', '>', '>>', '<<', '->', '(', ')']
 
-FILE_NAME = 'main.in'
+FILE_NAME = 'test.in'
 
 class SymTable(object):
 	def __init__(self):

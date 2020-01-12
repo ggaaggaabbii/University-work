@@ -136,6 +136,7 @@ def construct_table(can_col, grammar):
 			parse_table[tuple(item_list)][element] = 0
 
 		si = tuple(item_list)
+		# print(si)
 		for item in state:
 			dot_pos = item.index(DOT)
 			if dot_pos + 1 != len(item):
@@ -148,6 +149,8 @@ def construct_table(can_col, grammar):
 					parse_table[si][item[dot_pos + 1]] = tupled_sj
 				elif item[dot_pos + 1] in grammar.terminals:
 					# case 1
+					if parse_table[si][item[dot_pos + 1]] != 0:
+						print("Sh CONFLICT", parse_table[si][item[dot_pos + 1]])
 					parse_table[si][item[dot_pos + 1]] = (SHIFT, tupled_sj)
 			elif dot_pos + 1 == len(item):
 				# ex starting symbol
@@ -166,6 +169,8 @@ def construct_table(can_col, grammar):
 								symbol = u
 								if symbol == EPSILON:
 									symbol = grammar.start_symbol
+								if parse_table[si][symbol] != 0:
+									print("CONFLICT")
 								parse_table[si][symbol] = (REDUCE, item[:-1])
 			else:
 				print("Error")
@@ -202,10 +207,10 @@ def next_token_in_ws(state):
 
 def parse_grammar(grammar, w):
 	C = can_col(grammar)
-	"""
+	
 	print(C)
 	print("====================")
-	"""
+	
 	parse_table = construct_table(C, grammar)
 	"""
 	for x in parse_table.keys():
@@ -258,9 +263,11 @@ def parse_grammar(grammar, w):
 
 if __name__ == "__main__":
 	with open("grammar.in") as f:
+	#with open("minilanguage_grammer.in") as f:
 		g = Grammar(json.load(f))
 		g.enchant()
 		print(g)
 		w = ["id", "+", "(", "id", "+", "const", ")"]
+		#w = ["0", "18", "1"]
 		print(w)
 		parse_grammar(g, w)

@@ -1,0 +1,90 @@
+{
+	"Terminals" : ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"],
+	"Non terminals" : ["program", "decllist", "declaration", "strucdecl", "assignstmt", "type", "identifierstruct", "expression", "term", "factor", "condition", "iostmt", "ifstmt", "cmpdstmt", "whilestmt", "forstmt", "relation"],
+	"Productions" : {
+		"program" : [
+			["decllist"],
+			["cmpdstmt"],
+			["decllist", "program"],
+			["cmpdstmt", "program"]
+		],
+		"decllist" : [
+			["declaration", "23"],
+			["declaration", "decllist"]
+		],
+		"declaration" : [
+			["type", "0"],
+			["type", "0", "18", "1"],
+			["type", "0", "18", "identifierstruct"],
+			["strucdecl"]
+		],
+		"strucdecl" : [
+			["29", "19", "decllist", "20"]
+		],
+		"assignstmt" : [
+			["identifierstruct", "18", "expression"]
+		],
+		"type" : [
+			["2"],
+			["3"],
+			["4"]
+		],
+		"identifierstruct" : [
+			["0"],
+			["0", "28", "identifierstruct"]
+		],
+		"expression" : [
+			["expression", "9", "term"],
+			["expression", "10", "term"],
+			["term"]
+		],
+		"term" : [
+			["term", "11", "factor"],
+			["term", "12", "factor"],
+			["factor"]
+		],
+		"factor" : [
+			["21", "expression", "22"],
+			["identifierstruct"],
+			["1"]
+		],
+		"condition" : [
+			["expression", "relation", "expression"]
+		],
+		"iostmt" : [
+			["5", "7", "identifierstruct"],
+			["6", "8", "identifierstruct"],
+			["6", "8", "1"]
+		],
+		"ifstmt" : [
+			["26", "21", "condition", "22", "19", "cmpdstmt", "20"],
+			["26", "21", "condition", "22", "19", "cmpdstmt", "20", "27", "19", "cmpdstmt", "20"]
+		],
+		"cmpdstmt" : [
+			["assignstmt", "23"],
+			["iostmt", "23"],
+			["ifstmt"],
+			["whilestmt"],
+			["forstmt"],
+			["assignstmt", "23", "cmpdstmt"],
+			["iostmt", "23", "cmpdstmt"],
+			["ifstmt", "cmpdstmt"],
+			["whilestmt", "cmpdstmt"],
+			["forstmt", "cmpdstmt"]
+		],
+		"whilestmt" : [
+			["25", "21", "condition", "22", "19", "cmpdstmt", "20"]
+		],
+		"forstmt" : [
+			["24", "21", "decllist", "23", "condition", "23", "cmpdstmt", "22", "19", "cmpdstmt", "20"]
+		],
+		"relation" : [
+			["13"],
+			["14"],
+			["15"],
+			["16"],
+			["17"]
+		]
+	},
+	"Starting symbol" : "program"
+}
