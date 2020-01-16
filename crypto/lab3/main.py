@@ -90,11 +90,11 @@ def print_output(args):
 	base = args.b
 	ka = squaring_modular_exponentiation_modulo(base, args.r, MOD)
 	kb = squaring_modular_exponentiation_modulo(base, args.p, MOD)
-	print(ka, kb)
 
 	encrypted = encrypt(args.t, kb, args.r, MOD)
-	print(encrypted)
-	print(decrypt(encrypted, ka, args.p, MOD))
+	print("Encrypted: ", encrypted)
+	decrypted = decrypt(encrypted, ka, args.p, MOD)
+	print("Decrypted: ", decrypted)
 
 if __name__ == '__main__':
 	args = parser.parse_args()
