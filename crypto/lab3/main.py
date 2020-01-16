@@ -61,10 +61,10 @@ def modular_inverse(a, n):
 		return x % n
 	return None
 
-def encrypt(message, ka, kb, mod):
+def encrypt(message, kb, r, mod):
 	encrypted_message = []
 
-	kakb = squaring_modular_exponentiation_modulo(ka, kb, mod)
+	kakb = squaring_modular_exponentiation_modulo(kb, r, mod)
 
 	for i in message:
 		val = alphabet_values[i]
@@ -73,10 +73,10 @@ def encrypt(message, ka, kb, mod):
 		
 	return encrypted_message
 
-def decrypt(message, ka, kb, mod):
+def decrypt(message, ka, p, mod):
 	decrypted_message = ""
 
-	kakb = squaring_modular_exponentiation_modulo(ka, kb, mod)
+	kakb = squaring_modular_exponentiation_modulo(ka, p, mod)
 
 	for i in message:
 		decrypted_val = i * modular_inverse(kakb, mod) % mod
@@ -92,9 +92,9 @@ def print_output(args):
 	kb = squaring_modular_exponentiation_modulo(base, args.p, MOD)
 	print(ka, kb)
 
-	encrypted = encrypt(args.t, ka, kb, MOD)
+	encrypted = encrypt(args.t, kb, args.r, MOD)
 	print(encrypted)
-	print(decrypt(encrypted, ka, kb, MOD))
+	print(decrypt(encrypted, ka, args.p, MOD))
 
 if __name__ == '__main__':
 	args = parser.parse_args()
