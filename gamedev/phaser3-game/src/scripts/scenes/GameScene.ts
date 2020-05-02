@@ -116,6 +116,9 @@ export default class GameScene extends Scene3D {
 
             this.ringCylinder.visible = false;
             this.ringCylinder.name = 'ground';
+            this.ringCylinder.receiveShadow = this.ringCylinder.castShadow = true;
+            this.ringCylinder.material.roughness = 1;
+            this.ringCylinder.material.metalness = 1;
 
             this.third.add.existing(ring);
             this.third.physics.add.existing(ring, { depth: 24, mass: 0 });
@@ -281,5 +284,4 @@ export default class GameScene extends Scene3D {
             console.log("0 players");
         }
     }
-
 }

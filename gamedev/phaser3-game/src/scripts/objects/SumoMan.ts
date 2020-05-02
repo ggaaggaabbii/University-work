@@ -29,6 +29,10 @@ export default class SumoMan {
                     // @ts-ignore
                     child.material.needsUpdate = true;
                 }
+                // @ts-ignore
+                child.material.roughness = 1;
+                // @ts-ignore
+                child.material.metalness = 0;
             }
         });
 
@@ -56,7 +60,6 @@ export default class SumoMan {
                 this.player.userData.onGround = true;
             }
         })
-
     }
 
     update() {
